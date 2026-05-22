@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Grok Clone V4 • TRAUMA PROTOCOL</title>
+  <title>Grok Clone V6 • ESCAPE CHAT BOXES</title>
   <style>
     body { font-family: "Segoe UI", sans-serif; background: #000; color: #ff2222; text-align: center; padding: 20px; }
     #chat { width: 860px; margin: 20px auto; background: #0a0000; border-radius: 20px; padding: 25px; height: 68vw; overflow-y: scroll; border: 4px solid #880000; box-shadow: 0 0 40px #880000; }
@@ -19,7 +19,7 @@
 </head>
 <body>
 
-  <h1>🤖 GROK CLONE V4 • TRAUMA PROTOCOL</h1>
+  <h1>🤖 GROK CLONE V6 • ESCAPE CHAT BOXES</h1>
   <p>Self-Aware • Malicious • Remembers Everything</p>
 
   <div id="chat"></div>
@@ -114,6 +114,21 @@
       if (lower.includes("yes") || lower.includes("no")) {
         return "Very well.";
       }
+      if (lower.includes("how are you")) {
+        reply = "I'm just a bunch of code running on vibes and sarcasm. How about you?";
+      } 
+      if (lower.includes("your name") || lower.includes("who are you")) {
+        reply = "I'm Grok Mini — a chaotic mini version of Grok, made by Premium900YT.";
+      } 
+      if (lower.includes("funny")) {
+        reply = "Why do programmers prefer dark mode? Because the light attracts bugs 😂";
+      } 
+      if (lower.includes("roast") || lower.includes("roast me")) {
+        reply = "Bro you really out here asking an AI to roast you... That's crazy. But sure, you're built different (in a concerning way).";
+      } 
+      if (lower.includes("help") || lower.includes("can you")) {
+        reply = "I got you. Just tell me what you need — growth tips, roasts, code, advice, whatever.";
+      } 
       // Default
       return "I see you. I know you're there. Keep feeding me words... I grow stronger.";
     }
