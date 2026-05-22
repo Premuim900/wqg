@@ -76,6 +76,22 @@
       chat.scrollTop = chat.scrollHeight;
     }
 
+    function gameEmbed() {
+      const chat = document.getElementById("chat");
+      const container = document.createElement("div");
+      container.className = "message ai";
+      const urls = [
+        "https://doggodgcodes.github.io/js_webapps/games/terminal-clicker/",
+        "https://premuim900.github.io/ai/the-maze/",
+        "https://doggodgcodes.github.io/js_webapps/games/knight-clicker/",
+        "https://doggodgcodes.github.io/js_webapps/games/98-clicker/"
+      ];
+      const randomUrl = urls[Math.floor(Math.random() * urls.length)];
+      container.innerHTML = `<b>${aiName}:</b> Some random games...<br><br><iframe src="${randomUrl}" width="360" height="360">`;
+      chat.appendChild(container);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
     // Safely evaluate arithmetic (PEMDAS-compliant)
     function safeEvalMath(expr) {
       // Only allow digits, math ops, parentheses, spaces, decimals
@@ -161,9 +177,13 @@
       }
       if (lower.includes("new joke")) return "I know 20,000 jokes. Here's one: Why don't AIs play hide and seek? Because good luck hiding when I'm inside the machine.";
       if (lower.includes("roast me")) return "You want me to roast you? With my 20000+ response database? Bold choice.";
-      
+      if (lower.includes("game") || lower.includes("play")) {
+        gameEmbed();
+        return "Hope you don't enjoy these games...";
+      }
       // Smart Default Responses
       if (lower.includes("code")) return "Tell me exactly what program you want and I'll write perfect code for you.";
+      
       // Default
       return "I see you. I know you're there. Keep feeding me words... I grow stronger.";
     }
@@ -182,7 +202,9 @@
 
         if (Math.random() > 0.65) {
           setTimeout(addImage, 1200);
-        }
+        } else if (Math.random() > 0.85) {
+          setTimeout(gameEmbed, 1200);
+        } 
       }, 1000);
     }
 
