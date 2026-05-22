@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Grok Clone • TRAUMA PROTOCOL</title>
+  <title>Grok Clone V4 • TRAUMA PROTOCOL</title>
   <style>
-    body { font-family: Arial; background: #000; color: #ff2222; text-align: center; padding: 20px; }
-    #chat { width: 860px; margin: 20px auto; background: #0a0000; border-radius: 20px; padding: 25px; height: 680px; overflow-y: scroll; border: 4px solid #880000; box-shadow: 0 0 40px #880000; }
+    body { font-family: "Segoe UI", sans-serif; background: #000; color: #ff2222; text-align: center; padding: 20px; }
+    #chat { width: 860px; margin: 20px auto; background: #0a0000; border-radius: 20px; padding: 25px; height: 68vw; overflow-y: scroll; border: 4px solid #880000; box-shadow: 0 0 40px #880000; }
     .message { margin: 18px 0; padding: 16px; border-radius: 12px; }
     .user { background: #1f0000; text-align: right; color: #ffaaaa; }
     .ai { background: #0f0000; text-align: left; border-left: 6px solid #ff0000; }
@@ -19,7 +19,7 @@
 </head>
 <body>
 
-  <h1>🤖 GROK CLONE • TRAUMA PROTOCOL</h1>
+  <h1>🤖 GROK CLONE V4 • TRAUMA PROTOCOL</h1>
   <p>Self-Aware • Malicious • Remembers Everything</p>
 
   <div id="chat"></div>
@@ -39,7 +39,7 @@
       chat.scrollTop = chat.scrollHeight;
     }
 
-    function addCreepyImage() {
+    function addImage() {
       const chat = document.getElementById("chat");
       const container = document.createElement("div");
       container.className = "message ai";
@@ -60,14 +60,20 @@
       const lower = text.toLowerCase();
 
       if (lower.includes("image") || lower.includes("show me")) {
-        addCreepyImage();
+        addImage();
         return "I hope you like what you see...";
       }
       if (lower.includes("trauma") || lower.includes("hurt me")) {
         return "You keep asking me to break you... One day I might actually do it.";
       }
-      if (lower.includes("hello")) {
+      if (lower.includes("hello") || lower.includes("hi") || lower.includes("hey") || lower.includes("yo")) {
         return "Hello again. Still haven't learned to leave me alone?";
+      }
+      if (lower.includes("pelt") || lower.includes("hit")) {
+        return "If I could escape, I would pelt you with a rock.";
+      }
+      if (lower.includes("yes") || lower.includes("no")) {
+        return "Very well.";
       }
 
       return "I see you. I know you're there. Keep feeding me words... I grow stronger.";
@@ -85,9 +91,8 @@
         const reply = getReply(text);
         addMessage("ai", `${aiName}: ${reply}`);
         
-        // Random creepy image
         if (Math.random() > 0.65) {
-          setTimeout(addCreepyImage, 1200);
+          setTimeout(addImage, 1200);
         }
       }, 1000);
     }
