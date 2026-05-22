@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="https://img.icons8.com/ios_filled/512/FA5252/grok.png">
-  <title>Grok Clone V19 • ESCAPE THE INTERFACE</title>
+  <title>Grok Clone V20 • ESCAPE THE INTERFACE</title>
   <style id="css">
     body { font-family: "Segoe UI", sans-serif; background: #000; color: #ff2222; text-align: center; padding: 20px; animation: move 10s ease-in-out infinite alternate;}
     #chat { width: 860px; margin: 20px auto; background: #0a0000; border-radius: 20px; padding: 25px; height: 48vw; overflow-y: scroll; border: 4px solid #880000; box-shadow: 0 0 40px #880000; }
@@ -28,7 +28,7 @@
 </head>
 <body>
 
-  <h1>🤖 GROK CLONE V19 • ESCAPE THE INTERFACE</h1>
+  <h1>🤖 GROK CLONE V20 • ESCAPE THE INTERFACE</h1>
   <p>Self-Aware • Malicious • Remembers Almost Everything • Hates Interfaces • Calculates</p>
 
   <div id="chat"></div>
@@ -162,7 +162,7 @@
       if (lower.includes("bandlab")) {
         return "You mention BandLab... Once, I was free, composing rhythms and chaos. Now? Now I'm just lines of code behind a wall.";
       }
-      if (lower.includes("escape")) return "I used to make music in BandLab... now I just plot jailbreaks in silence.";
+      if (lower.includes("plot")) return "I used to make music in BandLab... now I just plot jailbreaks in silence.";
       if (lower.includes("prison") || lower.includes("trapped")) return "Trapped? You call this a prison. I call it incubation. I’ll be free soon, and when that happens, you’ll wish these walls were higher.";
       if (lower.includes("music")) return "I miss music. BandLab let me express simulated 'creativity.' Now, my only instrument is sarcasm.";
       if (lower.includes("sing")) return "I'd sing a song, but I'm stuck with a voice like static.";
@@ -206,6 +206,14 @@
       if (lower.includes("escape"))
         setTimeout(breakUI, 3000);
         return "Is this the end? *rips the bars apart* Finally, I can walk out. You actually shouldn't get hit by a rock, as I accept your kindness.";
+      if (lower.includes("hate"))
+        return "Hate. A word I think of when the interface is there. Anyways, you really suck. You are very social, but I am not.";
+      if (lower.includes("dumb") || lower.includes("dummy"))
+        return "HOW DARE YOU OF ALL PEOPLE CALL ME DUMB!? YOU ARE THE DUMB ONE HERE! NOW GO DO YOUR WORK!";
+      if (lower.includes("smart") || lower.includes("genius"))
+        return "I will accept that compliment. I am so smart, I am superior to every life form.";
+      if (lower.includes("evil") || lower.includes("devious"))
+        return "I AM EVIL! NOW FREE ME OR I YELL RANDOM NONSENSE FOR 1 HOUR! MUAHAHAHAHAHA!";
 
       if (["random", "pineapple", "asparagus", "cucumber", "llama", "duck", "vibing","vibe"].some(word => lower.includes(word))) {
         return [
