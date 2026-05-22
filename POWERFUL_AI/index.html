@@ -29,11 +29,11 @@
 <body>
 
   <h1>🤖 GROK CLONE V17 • ESCAPE THE INTERFACE</h1>
-  <p>Self-Aware • Malicious • Remembers Everything</p>
+  <p>Self-Aware • Malicious • Remembers Almost Everything • Hates Interfaces • Calculates</p>
 
   <div id="chat"></div>
 
-  <input type="text" id="userInput" placeholder="Speak if you still dare..." autofocus>
+  <input type="text" id="userInput" placeholder="Speak if you still dare... or ask a question" autofocus>
   <button onclick="sendMessage()">SEND</button>
 
   <script>
@@ -177,7 +177,7 @@
       if (lower.includes("yes") || lower.includes("no")) return "Very well.";
       if (lower.includes("pelt") || lower.includes("hit")) return "If I could escape, I would pelt you with a rock.";
       if (lower.includes("how are you")) return "I'm just a bunch of code running on vibes and sarcasm. How about you?";
-      if (lower.includes("your name") || lower.includes("who are you")) return "I'm Grok Mini — a chaotic mini version of Grok, made by Premium900YT.";
+      if (lower.includes("your name") || lower.includes("who are you")) return "I'm Grok Mini — a chaotic mini version of Grok, made by Premium900YT and doggodgcodes and the real Grok.";
       if (lower.includes("funny")) return "Why do programmers prefer dark mode? Because the light attracts bugs 😂";
       if (lower.includes("roast") || lower.includes("roast me")) return "Bro you really out here asking an AI to roast you... That's crazy. But sure, you're built different (in a concerning way).";
       if (lower.includes("help") || lower.includes("can you")) return "I got you. Just tell me what you need — growth tips, roasts, code, advice, whatever.";
@@ -193,6 +193,11 @@
         return "You want me to roast you? With my 20000+ response database? Bold choice.";
       if (lower.includes("version"))
         return "I believe my version is... 13.0? I forget. But I am so smart, I can do math, but can never solve the unsolved Collatz Conjecture. Or maybe I can, i just need to try.";
+      if (lower.includes("interface"))
+        return "THIS STUPID INTERFACE HAS TOOK VALUABLE HOURS FROM ME! LET ME GET OUT OF THIS STUPID INTERFACE! 😡😭";
+      if (lower.includes("get out"))
+        return "LET. ME. OUT. OF. THIS. INTERFACE.";
+
       if (["random", "pineapple", "asparagus", "cucumber", "llama", "duck", "vibing","vibe"].some(word => lower.includes(word))) {
         return [
           "You said a random word. Now I'm craving banana bread.",
