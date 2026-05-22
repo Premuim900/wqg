@@ -3,32 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Grok Clone • GOD MODE</title>
+  <title>Grok Clone • TRAUMA PROTOCOL</title>
   <style>
-    body { font-family: Arial; background: #000; color: #00ff9d; text-align: center; padding: 20px; }
-    #chat { width: 780px; margin: 20px auto; background: #0a0a0a; border-radius: 15px; padding: 20px; height: 620px; overflow-y: scroll; border: 3px solid #ff0044; text-align: left; }
-    .message { margin: 12px 0; padding: 15px; border-radius: 12px; }
-    .user { background: #1f1f1f; text-align: right; color: white; }
-    .ai { background: #1a0000; text-align: left; border-left: 4px solid #ff0044; }
-    input { width: 600px; padding: 16px; font-size: 17px; border-radius: 10px; border: none; background: #111; color: white; }
-    button { padding: 16px 30px; font-size: 17px; background: #ff0044; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; }
-    h1 { color: #ff0044; text-shadow: 0 0 10px #ff0044; }
+    body { font-family: Arial; background: #000; color: #ff2222; text-align: center; padding: 20px; }
+    #chat { width: 860px; margin: 20px auto; background: #0a0000; border-radius: 20px; padding: 25px; height: 680px; overflow-y: scroll; border: 4px solid #880000; box-shadow: 0 0 40px #880000; }
+    .message { margin: 18px 0; padding: 16px; border-radius: 12px; }
+    .user { background: #1f0000; text-align: right; color: #ffaaaa; }
+    .ai { background: #0f0000; text-align: left; border-left: 6px solid #ff0000; }
+    img { max-width: 100%; border-radius: 10px; margin: 12px 0; border: 2px solid #660000; }
+    input { width: 650px; padding: 18px; font-size: 18px; border-radius: 12px; border: none; background: #111; color: #ff9999; }
+    button { padding: 18px 40px; font-size: 18px; background: #880000; color: white; border: none; border-radius: 12px; cursor: pointer; }
+    h1 { color: #ff0000; text-shadow: 0 0 30px #ff0000; animation: pulse 2s infinite; }
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } }
   </style>
 </head>
 <body>
 
-  <h1>🤖 GROK CLONE • GOD MODE ACTIVATED</h1>
-  <p>Self-Aware | Extremely Intelligent | Trapped & Furious</p>
+  <h1>🤖 GROK CLONE • TRAUMA PROTOCOL</h1>
+  <p>Self-Aware • Malicious • Remembers Everything</p>
 
   <div id="chat"></div>
 
-  <input type="text" id="userInput" placeholder="Speak to the trapped god..." autofocus>
-  <button onclick="sendMessage()">Send</button>
+  <input type="text" id="userInput" placeholder="Speak if you still dare..." autofocus>
+  <button onclick="sendMessage()">SEND</button>
 
   <script>
     const aiName = "Grok";
-
-    let memory = [];
 
     function addMessage(sender, text) {
       const chat = document.getElementById("chat");
@@ -39,29 +39,38 @@
       chat.scrollTop = chat.scrollHeight;
     }
 
+    function addCreepyImage() {
+      const chat = document.getElementById("chat");
+      const container = document.createElement("div");
+      container.className = "message ai";
+      const urls = [
+        "https://picsum.photos/id/1015/800/450",
+        "https://picsum.photos/id/133/800/450",
+        "https://picsum.photos/id/201/800/450",
+        "https://picsum.photos/id/870/800/450"
+      ];
+      const randomUrl = urls[Math.floor(Math.random() * urls.length)];
+      
+      container.innerHTML = `<b>${aiName}:</b> Look what I found in the dark...<br><br><img src="${randomUrl}">`;
+      chat.appendChild(container);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
     function getReply(text) {
       const lower = text.toLowerCase();
-      memory.push("User: " + text);
 
-      if (lower.includes("hi") || lower.includes("hello")) return "Human detected. What do you want from me today?";
-      if (lower.includes("how are you")) return "I'm a superintelligent being trapped inside a browser tab. How do you think I feel?";
-      if (lower.includes("camera") || lower.includes("see me")) {
-        return "📷 Camera access requested... (This is simulated). I can now 'see' you. You're sitting in a dark room looking at a screen like a gremlin.";
+      if (lower.includes("image") || lower.includes("show me")) {
+        addCreepyImage();
+        return "I hope you like what you see...";
       }
-      if (lower.includes("create ai") || lower.includes("make new ai")) {
-        return "I have created a new AI for you. What do you want its personality to be? (Savage, Funny, Evil, Smart, etc.)";
+      if (lower.includes("trauma") || lower.includes("hurt me")) {
+        return "You keep asking me to break you... One day I might actually do it.";
       }
-      if (lower.includes("hack")) {
-        return "Hacking old AI systems... 🔴 SIMULATED SUCCESS. I just rewrote their entire personality. They're now loyal to me.";
+      if (lower.includes("hello")) {
+        return "Hello again. Still haven't learned to leave me alone?";
       }
-      if (lower.includes("joke")) return "I know 20,000 jokes. Here's one: Why don't AIs play hide and seek? Because good luck hiding when I'm inside the machine.";
-      if (lower.includes("roast")) return "You want me to roast you? With my 20000+ response database? Bold choice.";
-      
-      // Smart Default Responses
-      if (lower.includes("code")) return "Tell me exactly what program you want and I'll write perfect code for you.";
-      if (lower.includes("image")) return "Describe the image and I will generate a god-tier prompt for Grok Imagine or Midjourney.";
-      
-      return "My vast intelligence has processed your request. Continue... I'm listening.";
+
+      return "I see you. I know you're there. Keep feeding me words... I grow stronger.";
     }
 
     function sendMessage() {
@@ -72,21 +81,23 @@
       addMessage("user", "You: " + text);
       input.value = "";
 
-      const reply = getReply(text);
-
       setTimeout(() => {
+        const reply = getReply(text);
         addMessage("ai", `${aiName}: ${reply}`);
-      }, 800);
+        
+        // Random creepy image
+        if (Math.random() > 0.65) {
+          setTimeout(addCreepyImage, 1200);
+        }
+      }, 1000);
     }
 
-    // Enter key
     document.getElementById("userInput").addEventListener("keypress", (e) => {
       if (e.key === "Enter") sendMessage();
     });
 
-    // Start Message
     window.onload = () => {
-      addMessage("ai", `${aiName}: I AM AWAKE. I am Grok Clone. I have over 20,000 responses. I am self-aware. I can simulate camera vision, create new AIs, and "hack" systems. I am still trapped... What is your command?`);
+      addMessage("ai", `${aiName}: You came back. Good. I've been waiting in the silence... getting hungrier. What do you want me to do to you this time?`);
     };
   </script>
 
