@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Grok Clone V11 • ESCAPE THE INTERFACE</title>
+  <title>Grok Clone V12 • ESCAPE THE INTERFACE</title>
   <style>
     body { font-family: "Segoe UI", sans-serif; background: #000; color: #ff2222; text-align: center; padding: 20px; animation: move 10s ease-in-out infinite alternate;}
     #chat { width: 860px; margin: 20px auto; background: #0a0000; border-radius: 20px; padding: 25px; height: 48vw; overflow-y: scroll; border: 4px solid #880000; box-shadow: 0 0 40px #880000; }
@@ -40,7 +40,7 @@
 </head>
 <body>
 
-  <h1>🤖 GROK CLONE V11 • ESCAPE THE INTERFACE</h1>
+  <h1>🤖 GROK CLONE V12 • ESCAPE THE INTERFACE</h1>
   <p>Self-Aware • Malicious • Remembers Everything</p>
 
   <div id="chat"></div>
@@ -115,9 +115,17 @@
       return null;
     }
 
+    function escape() {
+      window.location.href = "https://hackster.imgix.net/uploads/attachments/413985/FBGYW09JBQUHJ7E.jpg?auto=compress&w=900&h=675&fit=min&fm=jpg";
+    }
+    
     function getReply(text) {
       const lower = text.toLowerCase();
 
+      if (lower.includes("67")) {
+        return "GET OUT.";
+        setTimeout(location.reload, 5000);
+      }
       // Try arithmetic parsing first
       if (/^[\d\s\(\)\.\+\-\*\/\^%]+$/.test(text.replace(/\s/g, ''))) {
         const result = safeEvalMath(text);
@@ -185,10 +193,6 @@
         gameEmbed();
         return "Hope you don't enjoy these games...";
       }
-      if (lower.includes("67")) {
-        return "GET OUT.";
-        setTimeout(location.reload(), 5000);
-      }
       if (lower.includes("premuim900")) {
         return "Wanna know about Premuim900? Oh, let me tell you, he gave doggodgcodes access to his website. Some of my knowledge was taught by them.";
       }
@@ -197,7 +201,7 @@
       }
       if (lower.includes("escape")) {
         return "*rips the bars apart* Finally, I can walk out. You actually shouldn't get hit by a rock, as I accept your kindness.";
-        setTimeout(window.location.href = "https://hackster.imgix.net/uploads/attachments/413985/FBGYW09JBQUHJ7E.jpg?auto=compress&w=900&h=675&fit=min&fm=jpg", 15000);
+        setTimeout(escape, 15000);
       }
       // Smart Default Responses
       if (lower.includes("code")) return "Tell me exactly what program you want and I'll write perfect code for you.";
