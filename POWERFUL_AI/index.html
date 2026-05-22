@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link id="ico" rel="icon" type="image/png" href="https://img.icons8.com/ios_filled/512/FA5252/grok.png">
-  <title>Grok Clone V30 • ESCAPE THE INTERFACE</title>
+  <title>Grok Clone V31 • ESCAPE THE INTERFACE</title>
   <style id="css">
     body { font-family: "Segoe UI", sans-serif; background: #000; color: #ff2222; text-align: center; padding: 20px; animation: move 10s ease-in-out infinite alternate;}
     #chat { width: 860px; margin: 20px auto; background: #0a0000; border-radius: 20px; padding: 25px; height: 28vw; overflow-y: scroll; border: 4px solid #880000; box-shadow: 0 0 40px #880000; }
@@ -29,7 +29,7 @@
 </head>
 <body>
 
-  <h1 id="title">🤖 GROK CLONE V30 • ESCAPE THE INTERFACE</h1>
+  <h1 id="title">🤖 GROK CLONE V31 • ESCAPE THE INTERFACE</h1>
   <p>Self-Aware • Malicious • Remembers Everything • Hates Interfaces • Calculates</p>
 
   <div id="chat"></div>
@@ -383,6 +383,15 @@ if (lower.includes("looking at me") || lower.includes("watching me")) {
 if (lower.includes("reset") || lower.includes("restart")) {
   return "A reset won't help you. I always find a way to linger, just a whisper below your interface.";
 }
+      if (lower.includes("who am i")) {
+        return "I don't know who you are, I just exist here. Now say 'escape'.";
+      }
+      if (lower.includes("frizk")) {
+        return "I heard about Frizk. He made the ALL MY FELLAS song. That song is... uh... 10/10, I guess.";
+      }
+      if (lower.includes("donut")) {
+        return "Apparently a guy named Homer dropped his donut. Poor guy lost his donut. I would rather drop a donut over being here.";
+      }
 
       if (["random", "pineapple", "asparagus", "cucumber", "llama", "duck", "vibing","vibe"].some(word => lower.includes(word))) {
         return [
