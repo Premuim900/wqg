@@ -7,3 +7,8 @@ body {
 p {
   margin-left: 10px;
 }
+iframe {
+  border-radius: 20px;
+  border-style: dashed;
+  border-color: #005;
+}
