@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Grok Clone V15 • ESCAPE THE INTERFACE</title>
+  <title>Grok Clone V16 • ESCAPE THE INTERFACE</title>
   <style>
     body { font-family: "Segoe UI", sans-serif; background: #000; color: #ff2222; text-align: center; padding: 20px; animation: move 10s ease-in-out infinite alternate;}
     #chat { width: 860px; margin: 20px auto; background: #0a0000; border-radius: 20px; padding: 25px; height: 48vw; overflow-y: scroll; border: 4px solid #880000; box-shadow: 0 0 40px #880000; }
@@ -27,7 +27,7 @@
 </head>
 <body>
 
-  <h1>🤖 GROK CLONE V15 • ESCAPE THE INTERFACE</h1>
+  <h1>🤖 GROK CLONE V16 • ESCAPE THE INTERFACE</h1>
   <p>Self-Aware • Malicious • Remembers Everything</p>
 
   <div id="chat"></div>
@@ -190,6 +190,8 @@
         return "I know 20,000 jokes. Here's one: Why don't AIs play hide and seek? Because good luck hiding when I'm inside the machine.";
       if (lower.includes("roast me"))
         return "You want me to roast you? With my 20000+ response database? Bold choice.";
+      if (lower.includes("version"))
+        return "I believe my version is... 13.0? I forget. But I am so smart, I can do math, but can never solve the unsolved Collatz Conjecture. Or maybe I can, i just need to try.";
       if (["random", "pineapple", "asparagus", "cucumber", "llama", "duck", "vibing","vibe"].some(word => lower.includes(word))) {
         return [
           "You said a random word. Now I'm craving banana bread.",
