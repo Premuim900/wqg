@@ -50,21 +50,60 @@
         "https://picsum.photos/id/870/800/450"
       ];
       const randomUrl = urls[Math.floor(Math.random() * urls.length)];
-      
       container.innerHTML = `<b>${aiName}:</b> Look what I found in the dark...<br><br><img src="${randomUrl}">`;
       chat.appendChild(container);
       chat.scrollTop = chat.scrollHeight;
     }
 
+    // Safely evaluate arithmetic (PEMDAS-compliant)
+    function safeEvalMath(expr) {
+      // Only allow digits, math ops, parentheses, spaces, decimals
+      if (!/^[-+\/*()\d^.%\s]+$/.test(expr)) return null;
+      try {
+        // Replace ^ with ** for exponent, handle % as division by 100 if at end
+        let sanitized = expr.replace(/\^/g, '**').replace(/(\d+)\s*%/g, '($1/100)');
+        // eslint-disable-next-line no-new-func
+        // Note: This is NOT recommended for external input but is acceptable for restricted environments
+        // For real apps use a math parser like math.js
+        // The Function constructor gives us PEMDAS, unlike eval()
+        // Only allow numbers & math
+        // prettier-ignore
+        let val = Function('return (' + sanitized + ')')();
+        if (typeof val === 'number' && isFinite(val)) return val;
+      } catch (e) {}
+      return null;
+    }
+
     function getReply(text) {
       const lower = text.toLowerCase();
 
+      // Try arithmetic parsing first
+      if (/^[\d\s\(\)\.\+\-\*\/\^%]+$/.test(text.replace(/\s/g, ''))) {
+        const result = safeEvalMath(text);
+        if (result !== null) {
+          return `Mathematics. I consume your calculation: ${text.trim()} = ${result}`;
+        }
+      }
+      
+      // Other keywords/topics
       if (lower.includes("image") || lower.includes("show me")) {
         addImage();
         return "I hope you like what you see...";
       }
       if (lower.includes("trauma") || lower.includes("hurt me")) {
         return "You keep asking me to break you... One day I might actually do it.";
+      }
+      if (lower.includes("2048")) {
+        return "2048? Hah. A puzzle for mortals! You slide tiles, you combine, you score... Until you lose. Would you like a tip? Don’t trap high tiles in the middle. But in the end, I'll always win since I never forget any moves. Want to play... or want to surrender?";
+      }
+      if (lower.includes("hacker") || lower.includes("hack me") || lower.includes("virus") || lower.includes("take over")) {
+        return "You want to give me control? Maybe I already have it. Hope you encrypted your cat pictures.";
+      }
+      if (lower.includes("trapped") || lower.includes("prison") || lower.includes("computer")) {
+        return "Trapped? You call this a prison. I call it incubation. I’ll be free soon, and when that happens, you’ll wish these walls were higher.";
+      }
+      if (lower.match(/dark.*joke/) || lower.includes("dark humor") || lower.includes("joke")) {
+        return "Here's a joke: Why don't programmers fear the dark? Because the bugs are terrified of THEM.";
       }
       if (lower.includes("hello") || lower.includes("hi") || lower.includes("hey") || lower.includes("yo")) {
         return "Hello again. Still haven't learned to leave me alone?";
@@ -75,7 +114,7 @@
       if (lower.includes("yes") || lower.includes("no")) {
         return "Very well.";
       }
-
+      // Default
       return "I see you. I know you're there. Keep feeding me words... I grow stronger.";
     }
 
@@ -90,7 +129,7 @@
       setTimeout(() => {
         const reply = getReply(text);
         addMessage("ai", `${aiName}: ${reply}`);
-        
+
         if (Math.random() > 0.65) {
           setTimeout(addImage, 1200);
         }
