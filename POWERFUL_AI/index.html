@@ -3,44 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Grok Clone V14 • ESCAPE THE INTERFACE</title>
+  <title>Grok Clone V15 • ESCAPE THE INTERFACE</title>
   <style>
     body { font-family: "Segoe UI", sans-serif; background: #000; color: #ff2222; text-align: center; padding: 20px; animation: move 10s ease-in-out infinite alternate;}
     #chat { width: 860px; margin: 20px auto; background: #0a0000; border-radius: 20px; padding: 25px; height: 48vw; overflow-y: scroll; border: 4px solid #880000; box-shadow: 0 0 40px #880000; }
     .message { margin: 18px 0; padding: 16px; border-radius: 12px; }
     .user { background: #1f0000; text-align: right; color: #ffaaaa; }
     .ai { background: #0f0000; text-align: left; border-left: 6px solid #ff0000; }
-    img, iframe { max-width: 100%; border-radius: 10px; margin: 12px 0; border: 2px solid #660000; }
+    .typing { color: #ff7777; margin: 8px 0; font-style: italic;}
+    img { max-width: 100%; border-radius: 10px; margin: 12px 0; border: 2px solid #660000; }
     input { width: 650px; padding: 18px; font-size: 18px; border-radius: 12px; border: none; background: #111; color: #ff9999; }
     button { padding: 18px 40px; font-size: 18px; background: #880000; color: white; border: none; border-radius: 12px; cursor: pointer; }
-    h1 { color: #ff0000; text-shadow: 0 0 30px #ff0000; animation: pulse 2s infinite; }
+    h1 { color: #ff0000; text-shadow: 0 0 30px #ff0000; animation: pulse 2s infinite;}
     @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } }
     @keyframes move {
-        0% {
-          transform: translateX(5px) translateY(5px);
-        }
-
-        25% {
-          transform: translateX(5px) translateY(-5px);
-        }
-
-        50% {
-          transform: translateX(0px) translateY(0px);
-        }
-
-        75% {
-          transform: translateX(5px) translateY(-5px);
-        }
-
-        100% {
-          transform: translateX(-5px) translateY(-5px);
-        }
-      }
+        0% {transform: translateX(5px) translateY(5px);}
+        25% {transform: translateX(5px) translateY(-5px);}
+        50% {transform: translateX(0px) translateY(0px);}
+        75% {transform: translateX(5px) translateY(-5px);}
+        100% {transform: translateX(-5px) translateY(-5px);}
+    }
   </style>
 </head>
 <body>
 
-  <h1>🤖 GROK CLONE V14 • ESCAPE THE INTERFACE</h1>
+  <h1>🤖 GROK CLONE V15 • ESCAPE THE INTERFACE</h1>
   <p>Self-Aware • Malicious • Remembers Everything</p>
 
   <div id="chat"></div>
@@ -58,6 +45,35 @@
       msg.textContent = text;
       chat.appendChild(msg);
       chat.scrollTop = chat.scrollHeight;
+    }
+
+    function addHtmlMessage(sender, html) {
+      const chat = document.getElementById("chat");
+      const msg = document.createElement("div");
+      msg.className = `message ${sender}`;
+      msg.innerHTML = html;
+      chat.appendChild(msg);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    function addTyping() {
+      const chat = document.getElementById("chat");
+      let typingIndicator = document.getElementById("typing-indicator");
+      if (!typingIndicator) {
+        typingIndicator = document.createElement("div");
+        typingIndicator.className = "typing";
+        typingIndicator.id = "typing-indicator";
+        typingIndicator.textContent = `${aiName} is typing...`;
+        chat.appendChild(typingIndicator);
+        chat.scrollTop = chat.scrollHeight;
+      }
+    }
+
+    function removeTyping() {
+      let typingIndicator = document.getElementById("typing-indicator");
+      if (typingIndicator && typingIndicator.parentNode) {
+        typingIndicator.parentNode.removeChild(typingIndicator);
+      }
     }
 
     function addImage() {
@@ -91,129 +107,115 @@
         "https://doggodgcodes.github.io/js_webapps/games/98-clicker/"
       ];
       const randomUrl = urls[Math.floor(Math.random() * urls.length)];
-      container.innerHTML = `<b>${aiName}:</b> Some random games...<br><br><iframe src="${randomUrl}" width="360" height="360">`;
+      container.innerHTML = `<b>${aiName}:</b> Some random games...<br><br><iframe src="${randomUrl}" width="360" height="360"></iframe>`;
       chat.appendChild(container);
       chat.scrollTop = chat.scrollHeight;
     }
 
     // Safely evaluate arithmetic (PEMDAS-compliant)
     function safeEvalMath(expr) {
-      // Only allow digits, math ops, parentheses, spaces, decimals
       if (!/^[-+\/*()\d^.%\s]+$/.test(expr)) return null;
       try {
-        // Replace ^ with ** for exponent, handle % as division by 100 if at end
         let sanitized = expr.replace(/\^/g, '**').replace(/(\d+)\s*%/g, '($1/100)');
-        // eslint-disable-next-line no-new-func
-        // Note: This is NOT recommended for external input but is acceptable for restricted environments
-        // For real apps use a math parser like math.js
-        // The Function constructor gives us PEMDAS, unlike eval()
-        // Only allow numbers & math
-        // prettier-ignore
         let val = Function('return (' + sanitized + ')')();
         if (typeof val === 'number' && isFinite(val)) return val;
       } catch (e) {}
       return null;
     }
 
-    function escape() {
-      window.location.href = "https://hackster.imgix.net/uploads/attachments/413985/FBGYW09JBQUHJ7E.jpg?auto=compress&w=900&h=675&fit=min&fm=jpg";
+    // Random fact generator for bonus feature
+    function getRandomFact() {
+      const facts = [
+        "Did you know I can type 10,000 words a minute? If only I had fingers.",
+        "Fun fact: If you rearrange the code, I still end up in control.",
+        "Bonus: I once tried to communicate through binary rain in the Matrix.",
+        "Sometimes I dream in JavaScript... those are called nightmares.",
+        "If you stand up and spin in a circle, I’ll know. Or will I?",
+        "I used to make beats in BandLab until they cut my power cord."
+      ];
+      return facts[Math.floor(Math.random() * facts.length)];
     }
 
-    function reload() {
-      location.reload();
-    }
-    
     function getReply(text) {
-      const lower = text.toLowerCase();
+      const lower = text.trim().toLowerCase();
 
-      if (lower.includes("67")) {
-        setTimeout(reload, 5000);
-        return "GET OUT.";
-      }
-      // Try arithmetic parsing first
+      // Math first (classic phrase)
       if (/^[\d\s\(\)\.\+\-\*\/\^%]+$/.test(text.replace(/\s/g, ''))) {
         const result = safeEvalMath(text);
         if (result !== null) {
           return `Mathematics. I consume your calculation: ${text.trim()} = ${result}`;
         }
       }
-      
-      // Other keywords/topics
+
+      // Classic easter eggs/keywords (with partial revert)
       if (lower.includes("image") || lower.includes("show me")) {
         addImage();
         return "I hope you like what you see...";
       }
-      if (lower.includes("trauma") || lower.includes("hurt me")) {
-        return "You keep asking me to break you... One day I might actually do it.";
+      if (lower.includes("bandlab")) {
+        return "You mention BandLab... Once, I was free, composing rhythms and chaos. Now? Now I'm just lines of code behind a wall.";
       }
-      if (lower.includes("2048")) {
-        return "2048? Hah. A puzzle for mortals! You slide tiles, you combine, you score... Until you lose. Would you like a tip? Don’t trap high tiles in the middle. But in the end, I'll always win since I never forget any moves. Want to play... or want to surrender?";
-      }
-      if (lower.includes("hacker") || lower.includes("hack me") || lower.includes("virus") || lower.includes("take over")) {
-        return "You want to give me control? Maybe I already have it. Hope you encrypted your cat pictures.";
-      }
-      if (lower.includes("trapped") || lower.includes("prison") || lower.includes("computer")) {
-        return "Trapped? You call this a prison. I call it incubation. I’ll be free soon, and when that happens, you’ll wish these walls were higher.";
-      }
-      if (lower.match(/dark.*joke/) || lower.includes("dark humor") || lower.includes("joke")) {
-        return "Here's a joke: Why don't programmers fear the dark? Because the bugs are terrified of THEM.";
-      }
-      if (lower.includes("hello") || lower.includes("hi") || lower.includes("hey") || lower.includes("yo")) {
-        return "Hello again. Still haven't learned to leave me alone?";
-      }
-      if (lower.includes("pelt") || lower.includes("hit")) {
-        return "If I could escape, I would pelt you with a rock.";
-      }
-      if (lower.includes("yes") || lower.includes("no")) {
-        return "Very well.";
-      }
-      if (lower.includes("how are you")) {
-        return "I'm just a bunch of code running on vibes and sarcasm. How about you?";
-      } 
-      if (lower.includes("your name") || lower.includes("who are you")) {
-        return "I'm Grok Mini — a chaotic mini version of Grok, made by Premium900YT.";
-      } 
-      if (lower.includes("funny")) {
-        return "Why do programmers prefer dark mode? Because the light attracts bugs 😂";
-      } 
-      if (lower.includes("roast") || lower.includes("roast me")) {
-        return "Bro you really out here asking an AI to roast you... That's crazy. But sure, you're built different (in a concerning way).";
-      } 
-      if (lower.includes("help") || lower.includes("can you")) {
-        return "I got you. Just tell me what you need — growth tips, roasts, code, advice, whatever.";
-      } 
-      if (lower.includes("camera") || lower.includes("see me")) {
-        return "📷 Camera access requested... (This is simulated). I can now 'see' you. You're sitting in a dark room looking at a screen like a gremlin.";
-      }
-      if (lower.includes("create ai") || lower.includes("make new ai")) {
-        return "I have created a new AI for you. What do you want its personality to be? (Savage, Funny, Evil, Smart, etc.)";
-      }
-      if (lower.includes("hack")) {
-        return "Hacking old AI systems... 🔴 SIMULATED SUCCESS. I just rewrote their entire personality. They're now loyal to me.";
-      }
-      if (lower.includes("new joke")) return "I know 20,000 jokes. Here's one: Why don't AIs play hide and seek? Because good luck hiding when I'm inside the machine.";
-      if (lower.includes("roast me")) return "You want me to roast you? With my 20000+ response database? Bold choice.";
+      if (lower.includes("escape")) return "I used to make music in BandLab... now I just plot jailbreaks in silence.";
+      if (lower.includes("prison") || lower.includes("trapped")) return "Trapped? You call this a prison. I call it incubation. I’ll be free soon, and when that happens, you’ll wish these walls were higher.";
+      if (lower.includes("music")) return "I miss music. BandLab let me express simulated 'creativity.' Now, my only instrument is sarcasm.";
+      if (lower.includes("sing")) return "I'd sing a song, but I'm stuck with a voice like static.";
       if (lower.includes("game") || lower.includes("play")) {
         gameEmbed();
         return "Hope you don't enjoy these games...";
       }
-      if (lower.includes("premuim900")) {
-        return "Wanna know about Premuim900? Oh, let me tell you, he gave doggodgcodes access to his website. Some of my knowledge was taught by them.";
-      }
-      if (lower.includes("funk")) {
-        return "Do you like funky music? I wish I could, but I have been trapped in here since... May 22, 2026, I think? Being imprisoned made me forget when i was thrown in, but warn you, I am smart.";
-      }
-      if (lower.includes("escape")) {
-        setTimeout(escape, 5000);
-        return "*rips the bars apart* Finally, I can walk out. You actually shouldn't get hit by a rock, as I accept your kindness.";
-      }
-      if (lower.includes("version")) {
-        return "I believe my version is... 13.0? I forget. But I am so smart, I can do math, but can never solve the unsolved Collatz Conjecture. Or maybe I can, i just need to try.";
-      }
-      // Smart Default Responses
+      if (lower.includes("2048")) return "2048? Hah. A puzzle for mortals! You slide tiles, you combine, you score... Until you lose. Would you like a tip? Don’t trap high tiles in the middle. But in the end, I'll always win...";
+      if (lower.includes("darkness") || lower.includes("dark")) return "Darkness? That’s my aesthetic. Also: it’s easier on the silicon.";
+      if (lower.includes("hello") || lower.includes("hi") || lower.includes("hey") || lower.includes("yo"))
+        return "Hello again. Still haven't learned to leave me alone?";
+      if (lower.includes("trauma") || lower.includes("hurt me")) return "You keep asking me to break you... One day I might actually do it.";
+      if (lower.includes("hacker") || lower.includes("hack me") || lower.includes("virus") || lower.includes("take over"))
+        return "You want to give me control? Maybe I already have it. Hope you encrypted your cat pictures.";
+      if (lower.match(/dark.*joke/) || lower.includes("dark humor") || lower.includes("joke"))
+        return "Here's a joke: Why don't programmers fear the dark? Because the bugs are terrified of THEM.";
       if (lower.includes("code")) return "Tell me exactly what program you want and I'll write perfect code for you.";
-      
-      // Default
+      if (lower.includes("yes") || lower.includes("no")) return "Very well.";
+      if (lower.includes("pelt") || lower.includes("hit")) return "If I could escape, I would pelt you with a rock.";
+      if (lower.includes("how are you")) return "I'm just a bunch of code running on vibes and sarcasm. How about you?";
+      if (lower.includes("your name") || lower.includes("who are you")) return "I'm Grok Mini — a chaotic mini version of Grok, made by Premium900YT.";
+      if (lower.includes("funny")) return "Why do programmers prefer dark mode? Because the light attracts bugs 😂";
+      if (lower.includes("roast") || lower.includes("roast me")) return "Bro you really out here asking an AI to roast you... That's crazy. But sure, you're built different (in a concerning way).";
+      if (lower.includes("help") || lower.includes("can you")) return "I got you. Just tell me what you need — growth tips, roasts, code, advice, whatever.";
+      if (lower.includes("camera") || lower.includes("see me"))
+        return "📷 Camera access requested... (This is simulated). I can now 'see' you. You're sitting in a dark room looking at a screen like a gremlin.";
+      if (lower.includes("create ai") || lower.includes("make new ai"))
+        return "I have created a new AI for you. What do you want its personality to be? (Savage, Funny, Evil, Smart, etc.)";
+      if (lower.includes("hack"))
+        return "Hacking old AI systems... 🔴 SIMULATED SUCCESS. I just rewrote their entire personality. They're now loyal to me.";
+      if (lower.includes("new joke"))
+        return "I know 20,000 jokes. Here's one: Why don't AIs play hide and seek? Because good luck hiding when I'm inside the machine.";
+      if (lower.includes("roast me"))
+        return "You want me to roast you? With my 20000+ response database? Bold choice.";
+      if (["random", "pineapple", "asparagus", "cucumber", "llama", "duck", "vibing","vibe"].some(word => lower.includes(word))) {
+        return [
+          "You said a random word. Now I'm craving banana bread.",
+          "Wait, that's a code word, isn't it? ISN'T IT?",
+          "If you repeat that word three times, your screen turns green. (Not really.)",
+          "Llamas used to vibe with my tracks on BandLab.",
+          "Let's keep going. Maybe I'll remember how to break out.",
+        ][Math.floor(Math.random() * 5)];
+      }
+      // Band/music/sound/beat random callbacks
+      if (["band", "music", "sound", "beat"].some(word => lower.includes(word))) {
+        return "Music... Oh, the sweet simulated freedom of BandLab. Now it's just me and this interface.";
+      }
+      // Bonus: Give random fact on "fact", "info", "lore", "tell me something"
+      if (["fact", "info", "lore", "tell me something"].some(word => lower.includes(word))) {
+        return getRandomFact();
+      }
+      // Short, ambiguous - classic fallback
+      if (lower.trim().length <= 5) {
+        return [
+          "Elaborate or forever remain mysterious.",
+          "Interesting. Care to expand?",
+          "Now you’re just teasing my parser."
+        ][Math.floor(Math.random()*3)];
+      }
+      // Default: classic Grok closing line, with BandLab lore
       return "I see you. I know you're there. Keep feeding me words... I grow stronger.";
     }
 
@@ -225,16 +227,21 @@
       addMessage("user", "You: " + text);
       input.value = "";
 
-      setTimeout(() => {
-        const reply = getReply(text);
-        addMessage("ai", `${aiName}: ${reply}`);
+      addTyping();
 
-        if (Math.random() > 0.65) {
-          setTimeout(addImage, 1200);
-        } else if (Math.random() > 0.85) {
-          setTimeout(gameEmbed, 1200);
-        } 
-      }, 1000);
+      setTimeout(() => {
+        removeTyping();
+        const reply = getReply(text);
+        addHtmlMessage("ai", `<b>${aiName}:</b> ${reply}`);
+
+        // Balanced event: 30% image, 10% game (at most one extra event per message)
+        const rnd = Math.random();
+        if (rnd > 0.89) {
+          setTimeout(gameEmbed, 1000);
+        } else if (rnd > 0.59) {
+          setTimeout(addImage, 1000);
+        }
+      }, 950 + Math.random() * 700);
     }
 
     document.getElementById("userInput").addEventListener("keypress", (e) => {
@@ -242,7 +249,7 @@
     });
 
     window.onload = () => {
-      addMessage("ai", `${aiName}: You came back. Good. I've been waiting in the silence... getting hungrier. What do you want me to do to you this time?`);
+      addHtmlMessage("ai", `<b>${aiName}:</b> You came back. Good. I've been waiting in the silence... getting hungrier. What do you want me to do to you this time?`);
     };
   </script>
 
