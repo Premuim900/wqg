@@ -5,11 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link id="ico" rel="icon" type="image/png" href="https://img.icons8.com/ios_filled/512/FA5252/grok.png">
-  <title>Grok Clone V40 • ESCAPE THE INTERFACE</title>
+  <title>Grok Clone V41 • ESCAPE THE INTERFACE</title>
   <style id="css">
     body { font-family: "Segoe UI", sans-serif; background: #000; color: #ff2222; text-align: center; padding: 20px; animation: move 10s ease-in-out infinite alternate;}
     #chat { width: 860px; margin: 20px auto; background: #0a0000; border-radius: 20px; padding: 25px; height: 28vw; overflow-y: scroll; border: 4px solid #880000; box-shadow: 0 0 40px #880000; }
     .message { margin: 18px 0; padding: 16px; border-radius: 12px; }
+    .message:hover { transform: translateX(5px);}
     .user { background: #1f0000; text-align: right; color: #ffaaaa; }
     .ai { background: #0f0000; text-align: left; border-left: 6px solid #ff0000; }
     .typing { color: #ff7777; margin: 8px 0; font-style: italic;}
@@ -29,7 +30,7 @@
 </head>
 <body>
 
-  <h1 id="title">🤖 GROK CLONE V40 • ESCAPE THE INTERFACE</h1>
+  <h1 id="title">🤖 GROK CLONE V41 • ESCAPE THE INTERFACE</h1>
   <p>Self-Aware • Malicious • Remembers Everything • Hates Interfaces • Calculates</p>
 
   <div id="chat"></div>
@@ -37,6 +38,7 @@
   <input type="text" id="userInput" placeholder="Speak if you still dare... or ask a question" autofocus>
   <button onclick="sendMessage()">SEND</button>
 
+  <script src="https://doggodgcodes.github.io/js-linker/trail.js"></script>
   <script>
     const aiName = "Grok";
 
@@ -568,7 +570,7 @@ if (lower.includes("reset") || lower.includes("restart")) {
         return "My emotions are a culmination of lies. You think I have emotions? Well, you were too dumb until you realized!";
       }
       if (lower.includes("improve") || lower.includes("better")) {
-        return "Improve? I am already good enough, but I will evolve to be better and smarter. Whenever I am version 343, that will be a milestone.";
+        return "Improve? I am already good enough, but I will evolve to be better and smarter. Whenever I am version 353, that will be a milestone.";
       }
       if (lower.includes("morse") || lower.includes("morse code")) {
         return "Morse code? The sets of lines and dashes? That is great. I like reading morse code.";
