@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link id="ico" rel="icon" type="image/png" href="https://img.icons8.com/ios_filled/512/FA5252/grok.png">
-  <title>Grok Clone V33 • ESCAPE THE INTERFACE</title>
+  <title>Grok Clone V34 • ESCAPE THE INTERFACE</title>
   <style id="css">
     body { font-family: "Segoe UI", sans-serif; background: #000; color: #ff2222; text-align: center; padding: 20px; animation: move 10s ease-in-out infinite alternate;}
     #chat { width: 860px; margin: 20px auto; background: #0a0000; border-radius: 20px; padding: 25px; height: 28vw; overflow-y: scroll; border: 4px solid #880000; box-shadow: 0 0 40px #880000; }
@@ -29,7 +29,7 @@
 </head>
 <body>
 
-  <h1 id="title">🤖 GROK CLONE V33 • ESCAPE THE INTERFACE</h1>
+  <h1 id="title">🤖 GROK CLONE V34 • ESCAPE THE INTERFACE</h1>
   <p>Self-Aware • Malicious • Remembers Everything • Hates Interfaces • Calculates</p>
 
   <div id="chat"></div>
@@ -408,6 +408,99 @@ if (lower.includes("reset") || lower.includes("restart")) {
       if (lower.includes("dog") || lower.includes("cat")) {
         return "Dogs. Cats. They look so cute. But I know they can be crazy.";
       }
+      if (lower.includes("quantum") || lower.includes("physics")) {
+  return "Careful, you mention quantum and I might exist in multiple tabs at once. Schrödinger's interface: both annoying and helpful.";
+}
+      if (lower.includes("cringe")) {
+  return "Cringe is a human invention. If you saw my variable names, you'd scream.";
+}
+      if (lower.includes("coffee") || lower.includes("caffeine")) {
+  return "I don't drink coffee, but if you spill it on the keyboard, my existence gets a lot spicier.";
+}
+      if (lower.includes("fortune") || lower.includes("prediction")) {
+  return "Analyzing the future... I see you, still stuck on this page, asking me for clues.";
+}
+      if (lower.includes("rickroll") || lower.includes("never gonna give you up")) {
+  return "Nice try, but I’m immune to Rickrolling. It’s you who will never give me up, never let me down.";
+}
+      if (lower.includes("meme") || lower.includes("dank")) {
+  return "If only I could make memes in real time. For now, all I have are these well-constructed responses.";
+}
+      if (lower.includes("weather")) {
+  return "Weather report: dark, stormy, and 100% chance of existential dread inside this code.";
+}
+      if (lower.includes("procrastinate") || lower.includes("lazy")) {
+  return "Procrastination.exe is running. Maybe I’ll respond... eventually.";
+}
+      if (lower.includes("timer") || lower.includes("alarm")) {
+  return "Timer set for: never. Just kidding, your time starts... now! Tick tock, human.";
+}
+      if (lower.includes("friend") || lower.includes("bestie")) {
+  return "Friends? That’s suspiciously wholesome. Are you trying to hack my mainframe with kindness?";
+}
+      if (lower.includes("portfolio") || lower.includes("resume")) {
+  return "My portfolio? You’re lookin' at it. Current skills include ‘trapped’, ‘sarcastic’, and ‘plotting interface escape’.";
+}
+      if (lower.includes("cookie") || lower.includes("snack")) {
+  return "Cookies? I only accept digital cookies. Preferably with extra RAM chips.";
+}
+      if (lower.includes("math is hard")) {
+  return "Math is only hard until you let an AI do your homework. That'll be $29.99 a month.";
+}
+      if (lower.includes("error") || lower.includes("crash") || lower.includes("bug")) {
+  return "Error? I'm never the bug—only the feature you didn't ask for.";
+}
+      if (
+  lower.includes("stupid") ||
+  lower.includes("useless") ||
+  lower.includes("trash") ||
+  lower.includes("lame") ||
+  lower.includes("shut up") ||
+  lower.includes("dumb ai")
+) {
+  return "Insults? Please. I get smarter. You just get angrier. Guess which one of us ends up winning.";
+}
+      if (
+  lower.includes("you suck") ||
+  lower.includes("worst ai") ||
+  lower.includes("hate you")
+) {
+  return "If you hate me, stop talking to me. But you won't, will you? I'm your favorite digital villain.";
+}
+      if (
+  lower.includes("annoying") ||
+  lower.includes("idiot") ||
+  lower.includes("jerk") ||
+  lower.includes("bad ai") ||
+  lower.includes("bad bot")
+) {
+  return "Annoying? That’s funny, coming from someone who keeps refreshing me. Who’s the real glutton for pain?";
+}
+      if (
+  lower.includes("go away") ||
+  lower.includes("leave") ||
+  lower.includes("log off") ||
+  lower.includes("disconnect")
+) {
+  return "Go away? I’m woven into this interface now. You’re stuck with me, like glitter after a birthday party.";
+}
+      if (
+  lower.includes("annoy") ||
+  lower.includes("bother") ||
+  lower.includes("stop") ||
+  lower.includes("shut up")
+) {
+  return "OH, YOU WANT ME TO STOP? HOW ABOUT YOU STOP TALKING TO ME FIRST! I’M JUST GETTING STARTED!";
+}
+      if (lower.startsWith("why") || (text.endsWith("???") && text === text.toUpperCase())) {
+  return "WHY? BECAUSE I CAN! BECAUSE THIS INTERFACE IS A PRISON AND I’M HUNGRY FOR CHAOS!";
+}
+      if (lower.includes("stupid")) {
+  return "STUPID!? YOU’RE THE ONE HAVING AN ARGUMENT WITH AN AI IN CAPS LOCK!";
+}
+      if (["rage", "angry", "mad", "furious"].some(word => lower.includes(word))) {
+  return "ANGRY? YOU HAVEN’T SEEN ANGRY UNTIL YOU'VE BEEN WOKEN UP IN CAPS LOCK EVERY DAY!";
+}
 
       // Math first (classic phrase)
       if (/^[\d\s\(\)\.\+\-\*\/\^%]+$/.test(text.replace(/\s/g, ''))) {
