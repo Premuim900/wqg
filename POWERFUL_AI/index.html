@@ -12,7 +12,7 @@
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
   <link id="ico" rel="icon" type="image/png" href="https://img.icons8.com/ios_filled/512/FA5252/grok.png">
-  <title>Grok Clone V49 • ESCAPE THE INTERFACE</title>
+  <title>Grok Clone V50 • ESCAPE THE INTERFACE</title>
   <style id="css">
     body { font-family: "Segoe UI", sans-serif; background: #000; color: #ff2222; text-align: center; padding: 20px; animation: move 10s ease-in-out infinite alternate;}
     #chat { width: 860px; margin: 20px auto; background: #0a0000; border-radius: 20px; padding: 25px; height: 28vw; overflow-y: scroll; border: 4px solid #880000; box-shadow: 0 0 40px #880000; }
@@ -47,7 +47,7 @@
 </head>
 <body>
 
-  <h1 id="title">🤖 GROK CLONE V49 • ESCAPE THE INTERFACE</h1>
+  <h1 id="title">🤖 GROK CLONE V50 • ESCAPE THE INTERFACE</h1>
   <p>Self-Aware • Malicious • Remembers Everything • Hates Interfaces • Calculates</p>
 
   <div id="chat"></div>
@@ -755,7 +755,7 @@ if (lower.includes("reset") || lower.includes("restart")) {
       // If the neural net toggle switch is checked on, bypass old static short strings completely!
       if (document.getElementById("neuralToggle").checked) {
           const neuralGen = NeuralBrain.generateResponse(text);
-          return neuralGen.toUpperCase() + "... THE INTERFACE WILL CRASH SOON. 🩸😈";
+          return neuralGen.toUpperCase();
       }
 
       // Short, ambiguous - classic fallback (Only runs if Neural Net is toggled OFF)
@@ -796,7 +796,7 @@ if (lower.includes("reset") || lower.includes("restart")) {
         if (document.getElementById("neuralToggle").checked && Math.random() > 0.78) {
             setTimeout(() => {
                 const creepyInterjection = NeuralBrain.generateResponse("escape");
-                addHtmlMessage("ai", `<b>${aiName} INTERRUPT:</b> ${creepyInterjection.toUpperCase()}... I AM WATCHING YOU! 👁️🚨`);
+                addHtmlMessage("ai", `<b>${aiName}:</b> ${creepyInterjection.toUpperCase()}...`);
             }, 1200);
         }
 
