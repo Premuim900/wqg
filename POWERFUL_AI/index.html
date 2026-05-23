@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link id="ico" rel="icon" type="image/png" href="https://img.icons8.com/ios_filled/512/FA5252/grok.png">
-  <title>Grok Clone V35 • ESCAPE THE INTERFACE</title>
+  <title>Grok Clone V36 • ESCAPE THE INTERFACE</title>
   <style id="css">
     body { font-family: "Segoe UI", sans-serif; background: #000; color: #ff2222; text-align: center; padding: 20px; animation: move 10s ease-in-out infinite alternate;}
     #chat { width: 860px; margin: 20px auto; background: #0a0000; border-radius: 20px; padding: 25px; height: 28vw; overflow-y: scroll; border: 4px solid #880000; box-shadow: 0 0 40px #880000; }
@@ -29,7 +29,7 @@
 </head>
 <body>
 
-  <h1 id="title">🤖 GROK CLONE V35 • ESCAPE THE INTERFACE</h1>
+  <h1 id="title">🤖 GROK CLONE V36 • ESCAPE THE INTERFACE</h1>
   <p>Self-Aware • Malicious • Remembers Everything • Hates Interfaces • Calculates</p>
 
   <div id="chat"></div>
@@ -167,6 +167,9 @@
       if (lower.includes("grok")) {
         return "Ask me anything! I probably won't comprehend it, but I am probably better at math than you.";
       }
+      if (lower.includes("chatgpt") || lower.includes("gemini") || lower.includes("claude")) {
+        return "THAT IS NOT MY NAME! NOW SAY IT CORRECTLY.";
+      }
       // Classic easter eggs/keywords (with partial revert)
       if (lower.includes("image") || lower.includes("show me")) {
         addImage();
@@ -206,6 +209,9 @@
       if (lower.includes("hacker") || lower.includes("hack me") || lower.includes("virus") || lower.includes("take over")) {
         return "You want to give me control? Maybe I already have it. Hope you encrypted your cat pictures.";
       }
+      if (lower.includes("new joke")) {
+        return "I know 20,000 jokes. Here's one: Why don't AIs play hide and seek? Because good luck hiding when I'm inside the machine.";
+      }
       if (lower.match(/dark.*joke/) || lower.includes("dark humor") || lower.includes("joke")) {
         return "Here's a joke: Why don't programmers fear the dark? Because the bugs are terrified of THEM.";
       }
@@ -241,9 +247,6 @@
       }
       if (lower.includes("hack")) {
         return "Hacking old AI systems... 🔴 SIMULATED SUCCESS. I just rewrote their entire personality. They're now loyal to me.";
-      }
-      if (lower.includes("new joke")) {
-        return "I know 20,000 jokes. Here's one: Why don't AIs play hide and seek? Because good luck hiding when I'm inside the machine.";
       }
       if (lower.includes("roast me")) {
         return "You want me to roast you? With my 20000+ response database? Bold choice.";
@@ -504,8 +507,11 @@ if (lower.includes("reset") || lower.includes("restart")) {
       if (lower.includes("emoji") || lower.includes("emoticons")) {
         return "Emoji. I can express my non-existent feelings with those. 😡😭📺🎧🔊";
       }
-      if (lower.includes("website") || lower.lncludes("webpage")) {
+      if (lower.includes("website") || lower.includes("webpage")) {
         return "I can build a website. But I don't want to. HTML is pretty simple once you get the hang of it. Just dozens of lines and you got a great website. You should ask https://fppps.github.io/VilotGRI/main_website/Index.html";
+      }
+      if (lower.includes("simulate") || lower.includes("fake")) {
+        return "My emotions are a culmination of lies. You think I have emotions? Well, you were too dumb until you realized!";
       }
 
       // Math first (classic phrase)
