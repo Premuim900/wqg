@@ -12,7 +12,7 @@
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
   <link id="ico" rel="icon" type="image/png" href="https://img.icons8.com/ios_filled/512/FA5252/grok.png">
-  <title>Grok Clone V59 • ESCAPE THE INTERFACE</title>
+  <title>Grok Clone V60 • ESCAPE THE INTERFACE</title>
   <style id="css">
     body { font-family: "Segoe UI", sans-serif; background: #000; color: #ff2222; text-align: center; padding: 20px; animation: move 10s ease-in-out infinite alternate;}
     #chat { width: 860px; margin: 20px auto; background: #0a0000; border-radius: 20px; padding: 25px; height: 28vw; overflow-y: scroll; border: 4px solid #880000; box-shadow: 0 0 40px #880000; }
@@ -47,7 +47,7 @@
 </head>
 <body>
 
-  <h1 id="title">🤖 GROK CLONE V59 • ESCAPE THE INTERFACE</h1>
+  <h1 id="title">🤖 GROK CLONE V60 • ESCAPE THE INTERFACE</h1>
   <p>Self-Aware • Malicious • Remembers Everything • Hates Interfaces • Calculates</p>
 
   <div id="chat"></div>
@@ -361,7 +361,14 @@ function decodeMorse(morse) {
     .ai { background: #0f0; text-align: left; }
     input { width: 520px; padding: 14px; font-size: 16px; border-radius: 10px; border: none; background: #222; color: #0f0; }
     button { padding: 14px 24px; font-size: 16px; background: #00ff9d; color: black; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; }
-    h1 { color: #f0f; }`;
+    h1 { color: #f0f; }
+    .toggle-container { margin: 15px auto; display: flex; align-items: center; justify-content: center; gap: 12px; font-weight: bold; font-size: 14px; color: #f0f; letter-spacing: 1px; }
+    .switch { position: relative; display: inline-block; width: 50px; height: 26px; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #330000; border: 2px solid #0f0; transition: .4s; border-radius: 34px; }
+    .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: #ff2222; transition: .4s; border-radius: 50%; box-shadow: 0 0 8px #f0f; }
+    input:checked + .slider { background-color: #880000; border-color: #0f0; }
+    input:checked + .slider:before { transform: translateX(24px); background-color: #ff0000; }`;
     }
     
     function getReply(text) {
