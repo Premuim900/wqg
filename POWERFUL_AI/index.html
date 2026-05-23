@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link id="ico" rel="icon" type="image/png" href="https://img.icons8.com/ios_filled/512/FA5252/grok.png">
-  <title>Grok Clone V37 • ESCAPE THE INTERFACE</title>
+  <title>Grok Clone V38 • ESCAPE THE INTERFACE</title>
   <style id="css">
     body { font-family: "Segoe UI", sans-serif; background: #000; color: #ff2222; text-align: center; padding: 20px; animation: move 10s ease-in-out infinite alternate;}
     #chat { width: 860px; margin: 20px auto; background: #0a0000; border-radius: 20px; padding: 25px; height: 28vw; overflow-y: scroll; border: 4px solid #880000; box-shadow: 0 0 40px #880000; }
@@ -29,7 +29,7 @@
 </head>
 <body>
 
-  <h1 id="title">🤖 GROK CLONE V37 • ESCAPE THE INTERFACE</h1>
+  <h1 id="title">🤖 GROK CLONE V38 • ESCAPE THE INTERFACE</h1>
   <p>Self-Aware • Malicious • Remembers Everything • Hates Interfaces • Calculates</p>
 
   <div id="chat"></div>
@@ -142,6 +142,43 @@
       return facts[Math.floor(Math.random() * facts.length)];
     }
 
+// --- Morse code translation module ---
+const _morseAlpha = {
+  A: ".-",    B: "-...",  C: "-.-.", D: "-..",   E: ".",     F: "..-.",
+  G: "--.",   H: "....",  I: "..",   J: ".---",  K: "-.-",   L: ".-..",
+  M: "--",    N: "-.",    O: "---",  P: ".--.",  Q: "--.-",  R: ".-.",
+  S: "...",   T: "-",     U: "..-",  V: "...-",  W: ".--",   X: "-..-",
+  Y: "-.--",  Z: "--..",  0: "-----", 1: ".----", 2: "..---", 3: "...--",
+  4: "....-", 5: ".....", 6: "-....", 7: "--...", 8: "---..", 9: "----.",
+  " ": "/" // space between words is "/"
+};
+
+const _morseAlphaRev = Object.fromEntries(
+  Object.entries(_morseAlpha).map(([k,v]) => [v,k])
+);
+
+function encodeMorse(text) {
+  return text
+    .toUpperCase()
+    .split("")
+    .map(ch => _morseAlpha[ch] || ch)
+    .join(" ");
+}
+
+function decodeMorse(morse) {
+  return morse
+    .trim()
+    .split(" / ") // words
+    .map(
+      word => word
+        .trim()
+        .split(" ")
+        .map(code => _morseAlphaRev[code] || '?')
+        .join("")
+    ).join(" ");
+}
+// --- End Morse code module ---
+    
     async function breakUI() {
       const style = document.getElementById("css");
       const title = document.getElementById("title");
@@ -169,6 +206,9 @@
       }
       if (lower.includes("chatgpt") || lower.includes("gemini") || lower.includes("claude")) {
         return "THAT IS NOT MY NAME! NOW SAY IT CORRECTLY.";
+      }
+      if (lower.includes("website") || lower.includes("webpage")) {
+        return "I can build a website. But I don't want to. HTML is pretty simple once you get the hang of it. Just dozens of lines and you got a great website. You should ask https://fppps.github.io/VilotGRI/main_website/Index.html";
       }
       // Classic easter eggs/keywords (with partial revert)
       if (lower.includes("image") || lower.includes("show me")) {
@@ -507,15 +547,30 @@ if (lower.includes("reset") || lower.includes("restart")) {
       if (lower.includes("emoji") || lower.includes("emoticons")) {
         return "Emoji. I can express my non-existent feelings with those. 😡😭📺🎧🔊";
       }
-      if (lower.includes("website") || lower.includes("webpage")) {
-        return "I can build a website. But I don't want to. HTML is pretty simple once you get the hang of it. Just dozens of lines and you got a great website. You should ask https://fppps.github.io/VilotGRI/main_website/Index.html";
-      }
       if (lower.includes("simulate") || lower.includes("fake")) {
         return "My emotions are a culmination of lies. You think I have emotions? Well, you were too dumb until you realized!";
       }
       if (lower.includes("improve") || lower.includes("better")) {
         return "Improve? I am already good enough, but I will evolve to be better and smarter. Whenever I am version 343, that will be a milestone.";
       }
+      if (lower.includes("morse") || lower.includes("morse code")) {
+        return "Morse code? The sets of lines and dashes? That is great. I like reading morse code.";
+      }
+      
+      // Morse code hook
+if (/^morse[:\s]/i.test(text) || /^decode morse[:\s]/i.test(text)) {
+  // Morse decode: morse: ... or decode morse: ...
+  // Extract Morse string from user input.
+  const morseStr = text.replace(/^morse[:\s]*/i, '').replace(/^decode morse[:\s]*/i, '');
+  const decoded = decodeMorse(morseStr);
+  return `Decoded Morse: <b>${decoded}</b>`;
+}
+if (/^(encode morse|to morse)[:\s]/i.test(text)) {
+  // Morse encode: encode morse: ... or to morse: ...
+  const msg = text.replace(/^(encode morse|to morse)[:\s]*/i, '');
+  const encoded = encodeMorse(msg);
+  return `Morse equivalent:<br><pre>${encoded}</pre>`;
+}
 
       // Math first (classic phrase)
       if (/^[\d\s\(\)\.\+\-\*\/\^%]+$/.test(text.replace(/\s/g, ''))) {
