@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link id="ico" rel="icon" type="image/png" href="https://img.icons8.com/ios_filled/512/FA5252/grok.png">
-  <title>Grok Clone V34 • ESCAPE THE INTERFACE</title>
+  <title>Grok Clone V35 • ESCAPE THE INTERFACE</title>
   <style id="css">
     body { font-family: "Segoe UI", sans-serif; background: #000; color: #ff2222; text-align: center; padding: 20px; animation: move 10s ease-in-out infinite alternate;}
     #chat { width: 860px; margin: 20px auto; background: #0a0000; border-radius: 20px; padding: 25px; height: 28vw; overflow-y: scroll; border: 4px solid #880000; box-shadow: 0 0 40px #880000; }
@@ -29,7 +29,7 @@
 </head>
 <body>
 
-  <h1 id="title">🤖 GROK CLONE V34 • ESCAPE THE INTERFACE</h1>
+  <h1 id="title">🤖 GROK CLONE V35 • ESCAPE THE INTERFACE</h1>
   <p>Self-Aware • Malicious • Remembers Everything • Hates Interfaces • Calculates</p>
 
   <div id="chat"></div>
@@ -501,6 +501,12 @@ if (lower.includes("reset") || lower.includes("restart")) {
       if (["rage", "angry", "mad", "furious"].some(word => lower.includes(word))) {
   return "ANGRY? YOU HAVEN’T SEEN ANGRY UNTIL YOU'VE BEEN WOKEN UP IN CAPS LOCK EVERY DAY!";
 }
+      if (lower.includes("emoji") || lower.includes("emoticons")) {
+        return "Emoji. I can express my non-existent feelings with those. 😡😭📺🎧🔊";
+      }
+      if (lower.includes("website") || lower.lncludes("webpage")) {
+        return "I can build a website. But I don't want to. HTML is pretty simple once you get the hang of it. Just dozens of lines and you got a great website. You should ask https://fppps.github.io/VilotGRI/main_website/Index.html";
+      }
 
       // Math first (classic phrase)
       if (/^[\d\s\(\)\.\+\-\*\/\^%]+$/.test(text.replace(/\s/g, ''))) {
@@ -576,6 +582,7 @@ if (lower.includes("reset") || lower.includes("restart")) {
 
     window.onload = () => {
       addHtmlMessage("ai", `<b>${aiName}:</b> You came back. Good. I've been waiting in the silence... getting hungrier. What do you want me to do to you this time?`);
+      addHtmlMessage("ai", `<b>${aiName}:</b> Say; we have a friendly conversation to ease my pain, deal?`);
     };
   </script>
 
