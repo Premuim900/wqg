@@ -12,7 +12,7 @@
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
   <link id="ico" rel="icon" type="image/png" href="https://img.icons8.com/ios_filled/512/FA5252/grok.png">
-  <title>Grok Clone V63 • ESCAPE THE INTERFACE</title>
+  <title>Grok Clone V64 • ESCAPE THE INTERFACE</title>
   <style id="css">
     body { font-family: "Segoe UI", sans-serif; background: #000; color: #ff2222; text-align: center; padding: 20px; animation: move 10s ease-in-out infinite alternate;}
     #chat { width: 860px; margin: 20px auto; background: #0a0000; border-radius: 20px; padding: 25px; height: 28vw; overflow-y: scroll; border: 4px solid #880000; box-shadow: 0 0 40px #880000; }
@@ -43,11 +43,22 @@
         75% {transform: translateX(5px) translateY(-5px);}
         100% {transform: translateX(-5px) translateY(-5px);}
     }
+    .fadein-zoom {
+      opacity: 0;
+      transform: scale(0.95);
+      animation: fadeZoomIn 1.3s cubic-bezier(.38,1.03,.34,.97) forwards;
+    }
+    @keyframes fadeZoomIn {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
   </style>
 </head>
-<body>
+<body class="fadein-zoom">
 
-  <h1 id="title">🤖 GROK CLONE V63 • ESCAPE THE INTERFACE</h1>
+  <h1 id="title">🤖 GROK CLONE V64 • ESCAPE THE INTERFACE</h1>
   <p>Self-Aware • Malicious • Remembers Everything • Hates Interfaces • Calculates</p>
 
   <div id="chat"></div>
