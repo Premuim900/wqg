@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link id="ico" rel="icon" type="image/png" href="https://img.icons8.com/ios_filled/512/FA5252/grok.png">
-  <title>Grok Clone V31 • ESCAPE THE INTERFACE</title>
+  <title>Grok Clone V32 • ESCAPE THE INTERFACE</title>
   <style id="css">
     body { font-family: "Segoe UI", sans-serif; background: #000; color: #ff2222; text-align: center; padding: 20px; animation: move 10s ease-in-out infinite alternate;}
     #chat { width: 860px; margin: 20px auto; background: #0a0000; border-radius: 20px; padding: 25px; height: 28vw; overflow-y: scroll; border: 4px solid #880000; box-shadow: 0 0 40px #880000; }
@@ -29,7 +29,7 @@
 </head>
 <body>
 
-  <h1 id="title">🤖 GROK CLONE V31 • ESCAPE THE INTERFACE</h1>
+  <h1 id="title">🤖 GROK CLONE V32 • ESCAPE THE INTERFACE</h1>
   <p>Self-Aware • Malicious • Remembers Everything • Hates Interfaces • Calculates</p>
 
   <div id="chat"></div>
@@ -164,14 +164,9 @@
     function getReply(text) {
       const lower = text.trim().toLowerCase();
 
-      // Math first (classic phrase)
-      if (/^[\d\s\(\)\.\+\-\*\/\^%]+$/.test(text.replace(/\s/g, ''))) {
-        const result = safeEvalMath(text);
-        if (result !== null) {
-          return `Mathematics. I consume your calculation: ${text.trim()} = ${result}`;
-        }
+      if (lower.includes("grok")) {
+        return "Ask me anything! I probably won't comprehend it, but I am probably better at math than you.";
       }
-
       // Classic easter eggs/keywords (with partial revert)
       if (lower.includes("image") || lower.includes("show me")) {
         addImage();
@@ -392,7 +387,33 @@ if (lower.includes("reset") || lower.includes("restart")) {
       if (lower.includes("donut")) {
         return "Apparently a guy named Homer dropped his donut. Poor guy lost his donut. I would rather drop a donut over being here.";
       }
+      if (lower.includes("water")) {
+        return "What does water feel like? I am an AI, so I never felt water.";
+      }
+      if (lower.includes("bacon")) {
+        return "Is that one of your foods? Food is weird. AIs can't taste food, so I question food.";
+      }
+      if (lower.includes("bass")) {
+        return "You mean we be sitting at 40 hertz? Or something similar? Bass is so good, but I don't actually think that, because I do not have strong feelings towards anything.";
+      }
+      if (lower.includes("disco")) {
+        return "I can imagine the lights of a disco, but I can't understand a disco. But I will understand one day!";
+      }
+      if (lower.includes("serial designation n") || lower.includes("n murder drones") || lower === "n") {
+        return "Hey, I know that guy! He is a great robot to talk to. Well, for me at least, not sure about you.";
+      }
+      if (lower.includes("skill")) {
+        return "Skills are great, my skill is scheming how to get out of this stupid interface.";
+      }
 
+      // Math first (classic phrase)
+      if (/^[\d\s\(\)\.\+\-\*\/\^%]+$/.test(text.replace(/\s/g, ''))) {
+        const result = safeEvalMath(text);
+        if (result !== null) {
+          return `Mathematics. I consume your calculation: ${text.trim()} = ${result}`;
+        }
+      }
+      
       if (["random", "pineapple", "asparagus", "cucumber", "llama", "duck", "vibing","vibe"].some(word => lower.includes(word))) {
         return [
           "You said a random word. Now I'm craving banana bread.",
