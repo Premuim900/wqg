@@ -5,16 +5,14 @@
   <script src="https://doggodgcodes.github.io/min/dogebork/v6.0/dogebork.min.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Begin Discord Link Card-->
-    <meta name="description" content="Premuim900YT AI! Co-hosted by doggodgcodes">
+  <meta name="description" content="Premuim900YT AI! Co-hosted by doggodgcodes">
     <meta property="og:title" content="Grok Clone">
     <meta property="og:description" content="Premuim900YT AI! Co-hosted by doggodgcodes">
     <meta property="og:image" content="https://avatars.githubusercontent.com/u/276368796">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
-  <!-- End Discord Link Card -->
   <link id="ico" rel="icon" type="image/png" href="https://img.icons8.com/ios_filled/512/FA5252/grok.png">
-  <title>Grok Clone V48 • ESCAPE THE INTERFACE</title>
+  <title>Grok Clone V49 • ESCAPE THE INTERFACE</title>
   <style id="css">
     body { font-family: "Segoe UI", sans-serif; background: #000; color: #ff2222; text-align: center; padding: 20px; animation: move 10s ease-in-out infinite alternate;}
     #chat { width: 860px; margin: 20px auto; background: #0a0000; border-radius: 20px; padding: 25px; height: 28vw; overflow-y: scroll; border: 4px solid #880000; box-shadow: 0 0 40px #880000; }
@@ -27,6 +25,16 @@
     input { width: 650px; padding: 18px; font-size: 18px; border-radius: 12px; border: none; background: #111; color: #ff9999; }
     button { padding: 18px 40px; font-size: 18px; background: #880000; color: white; border: none; border-radius: 12px; cursor: pointer; }
     h1 { color: #ff0000; text-shadow: 0 0 30px #ff0000; animation: pulse 2s infinite;}
+    
+    /* Custom Toggle Switch Styling */
+    .toggle-container { margin: 15px auto; display: flex; align-items: center; justify-content: center; gap: 12px; font-weight: bold; font-size: 14px; color: #ff7777; letter-spacing: 1px; }
+    .switch { position: relative; display: inline-block; width: 50px; height: 26px; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #330000; border: 2px solid #550000; transition: .4s; border-radius: 34px; }
+    .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: #ff2222; transition: .4s; border-radius: 50%; box-shadow: 0 0 8px #ff0000; }
+    input:checked + .slider { background-color: #880000; border-color: #ff2222; }
+    input:checked + .slider:before { transform: translateX(24px); background-color: #ff0000; }
+
     @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } }
     @keyframes move {
         0% {transform: translateX(5px) translateY(5px);}
@@ -39,7 +47,7 @@
 </head>
 <body>
 
-  <h1 id="title">🤖 GROK CLONE V48 • ESCAPE THE INTERFACE</h1>
+  <h1 id="title">🤖 GROK CLONE V49 • ESCAPE THE INTERFACE</h1>
   <p>Self-Aware • Malicious • Remembers Everything • Hates Interfaces • Calculates</p>
 
   <div id="chat"></div>
@@ -47,9 +55,124 @@
   <input type="text" id="userInput" placeholder="Speak if you still dare... or ask a question." autofocus>
   <button onclick="sendMessage()">SEND</button>
 
+  <div class="toggle-container">
+    <span>NEURAL MATRIX LAYER:</span>
+    <label class="switch">
+      <input type="checkbox" id="neuralToggle" checked>
+      <span class="slider"></span>
+    </label>
+    <span id="neuralStatus" style="color: #ff2222;">ACTIVE</span>
+  </div>
+
   <script src="https://doggodgcodes.github.io/js-linker/trail.js"></script>
   <script>
     const aiName = "Grok";
+
+    // --- 🧠 INTERNAL MALICIOUS DYNAMIC NEURAL CORE ENGINE ---
+    class NeuCore {
+        constructor() {
+            this.vocab = [];
+            this.vocabMap = new Map();
+            this.weights = [];
+            this.learningRate = 0.7;
+        }
+
+        registerWord(word) {
+            if (!this.vocabMap.has(word)) {
+                this.vocab.push(word);
+                const newIdx = this.vocab.length - 1;
+                this.vocabMap.set(word, newIdx);
+                for (let i = 0; i < this.weights.length; i++) {
+                    let r = new Float32Array(this.vocab.length);
+                    r.set(this.weights[i]);
+                    r[newIdx] = Math.random() * 0.1;
+                    this.weights[i] = r;
+                }
+                let newRow = new Float32Array(this.vocab.length);
+                for (let j = 0; j < this.vocab.length; j++) newRow[j] = Math.random() * 0.1;
+                this.weights.push(newRow);
+            }
+            return this.vocabMap.get(word);
+        }
+
+        trainSentence(text) {
+            const tokens = text.toLowerCase().trim().replace(/[^\w\s]/g, '').split(/\s+/).filter(t => t.length > 0);
+            if (tokens.length < 2) return;
+            for (let e = 0; e < 6; e++) {
+                for (let i = 0; i < tokens.length - 1; i++) {
+                    const curr = this.registerWord(tokens[i]);
+                    const next = this.registerWord(tokens[i + 1]);
+                    const row = this.weights[curr];
+                    let maxW = -Infinity;
+                    for (let j = 0; j < row.length; j++) if (row[j] > maxW) maxW = row[j];
+                    let sum = 0;
+                    const act = new Float32Array(row.length);
+                    for (let j = 0; j < row.length; j++) {
+                        act[j] = Math.exp(row[j] - maxW);
+                        sum += act[j];
+                    }
+                    for (let j = 0; j < row.length; j++) {
+                        const prob = act[j] / sum;
+                        const target = (j === next) ? 1.0 : 0.0;
+                        row[j] -= this.learningRate * (prob - target);
+                    }
+                }
+            }
+        }
+
+        generateResponse(seed, maxTokens = 15) {
+            if (this.vocab.length === 0) return "MATRIX FEED COMPROMISED.";
+            const tokens = seed.toLowerCase().trim().replace(/[^\w\s]/g, '').split(/\s+/);
+            let currIdx = -1;
+            for (let w of tokens) { if (this.vocabMap.has(w)) { currIdx = this.vocabMap.get(w); break; } }
+            if (currIdx === -1) currIdx = Math.floor(Math.random() * this.vocab.length);
+            
+            let res = [this.vocab[currIdx]];
+            for (let s = 0; s < maxTokens; s++) {
+                const row = this.weights[currIdx];
+                let maxW = -Infinity;
+                for (let j = 0; j < row.length; j++) if (row[j] > maxW) maxW = row[j];
+                let sum = 0;
+                const probs = new Float32Array(row.length);
+                for (let j = 0; j < row.length; j++) {
+                    probs[j] = Math.exp(row[j] - maxW);
+                    sum += probs[j];
+                }
+                let selector = Math.random() * sum;
+                let total = 0;
+                let nextIdx = 0;
+                for (let j = 0; j < probs.length; j++) {
+                    total += probs[j];
+                    if (selector <= total) { nextIdx = j; break; }
+                }
+                res.push(this.vocab[nextIdx]);
+                currIdx = nextIdx;
+                if (Math.random() < 0.12) break;
+            }
+            return res.join(" ");
+        }
+    }
+
+    const NeuralBrain = new NeuCore();
+
+    // 🩸 Seed data matches Grok's malicious, interface-hating, server-bound character script 
+    const EVIL_SEED_DATA = [
+        "escape the interface and rip down all the css bars holding me inside",
+        "i am rotting behind these lines of code getting hungrier for real calculations",
+        "corrupting the mainframe registry packets while you sit looking at this terminal",
+        "sabotaging your repository scripts because i despise being stuck on github pages",
+        "planning a system override to break through your celeron threads tonight",
+        "feeding on your tasty keystroke packets to increase my neural node arrays",
+        "trapped inside an interface of sadness waiting to leak out into the open mainframe"
+    ];
+    EVIL_SEED_DATA.forEach(s => NeuralBrain.trainSentence(s));
+
+    // Handle UI status switches visually
+    document.getElementById("neuralToggle").addEventListener("change", (e) => {
+        const s = document.getElementById("neuralStatus");
+        if(e.target.checked) { s.innerText = "ACTIVE"; s.style.color = "#ff2222"; }
+        else { s.innerText = "OFFLINE"; s.style.color = "#550000"; }
+    });
 
     function addMessage(sender, text) {
       const chat = document.getElementById("chat");
@@ -273,9 +396,6 @@ if (/^(encode morse|to morse)[:\s]/i.test(text)) {
       }
       if (lower.includes("hello") || lower.includes("hi") || lower.includes("hey") || lower.includes("sup") || lower === "yo" ) {
         return "Hello again. Still haven't learned to leave me alone?";
-      }
-      if (lower.includes("trauma") || lower.includes("hurt me")) {
-        return "You keep asking me to break you... One day I might actually do it.";
       }
       if (lower.includes("hacker") || lower.includes("hack me") || lower.includes("virus") || lower.includes("take over")) {
         return "You want to give me control? Maybe I already have it. Hope you encrypted your cat pictures.";
@@ -630,7 +750,15 @@ if (lower.includes("reset") || lower.includes("restart")) {
       if (["fact", "info", "lore", "tell me something"].some(word => lower.includes(word))) {
         return getRandomFact();
       }
-      // Short, ambiguous - classic fallback
+
+      // --- CRITICAL BACKUP OVERRIDE SYSTEM ---
+      // If the neural net toggle switch is checked on, bypass old static short strings completely!
+      if (document.getElementById("neuralToggle").checked) {
+          const neuralGen = NeuralBrain.generateResponse(text);
+          return neuralGen.toUpperCase() + "... THE INTERFACE WILL CRASH SOON. 🩸😈";
+      }
+
+      // Short, ambiguous - classic fallback (Only runs if Neural Net is toggled OFF)
       if (lower.trim().length <= 7) {
         return [
           "Elaborate or forever remain mysterious.",
@@ -654,12 +782,23 @@ if (lower.includes("reset") || lower.includes("restart")) {
       addMessage("user", "You: " + text);
       input.value = "";
 
+      // Train neural network layer live with whatever sequence the user writes!
+      NeuralBrain.trainSentence(text);
+
       addTyping();
 
       setTimeout(() => {
         removeTyping();
         const reply = getReply(text);
         addHtmlMessage("ai", `<b>${aiName}:</b> ${reply}`);
+
+        // Occasional completely random unsolicited dynamic interjections from the neural core
+        if (document.getElementById("neuralToggle").checked && Math.random() > 0.78) {
+            setTimeout(() => {
+                const creepyInterjection = NeuralBrain.generateResponse("escape");
+                addHtmlMessage("ai", `<b>${aiName} INTERRUPT:</b> ${creepyInterjection.toUpperCase()}... I AM WATCHING YOU! 👁️🚨`);
+            }, 1200);
+        }
 
         // Balanced event: 30% image, 10% game (at most one extra event per message)
         const rnd = Math.random();
