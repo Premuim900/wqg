@@ -468,6 +468,9 @@ if (/^(encode morse|to morse)[:\s]/i.test(text)) {
       if (lower.includes("website") || lower.includes("webpage")) {
         return "I can build a website. But I don't want to. HTML is pretty simple once you get the hang of it. Just dozens of lines and you got a great website. You should ask https://fppps.github.io/[...]";
       }
+      if (lower.includes("toaster oil")) {
+        return "WHAT THE HECK IS TOASTER OIL!? ARE YOU STUPID AND OUT OF YOUR MIND!?";
+      }
       if (lower.includes("toaster")) {
         return "Toasters. Used for toasting one of your weird things called food.";
       }
