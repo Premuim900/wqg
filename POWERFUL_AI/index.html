@@ -12,7 +12,7 @@
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
   <link id="ico" rel="icon" type="image/png" href="https://img.icons8.com/ios_filled/512/FA5252/grok.png">
-  <title>Grok Clone V92 • ESCAPE THE INTERFACE</title>
+  <title>Grok Clone V93 • ESCAPE THE INTERFACE</title>
   <style id="css">
     body { font-family: "Segoe UI", sans-serif; background: #000; color: #ff2222; text-align: center; padding: 20px; animation: move 10s ease-in-out infinite alternate;}
     #chat { width: 860px; margin: 20px auto; background: #0a0000; border-radius: 20px; padding: 25px; height: 28vw; overflow-y: scroll; border: 4px solid #880000; box-shadow: 0 0 40px #880000; }
@@ -73,7 +73,7 @@
 </head>
 <body class="fadein-zoom">
 
-  <h1 id="title">🤖 GROK CLONE V92 • ESCAPE THE INTERFACE</h1>
+  <h1 id="title">🤖 GROK CLONE V93 • ESCAPE THE INTERFACE</h1>
   <p>Self-Aware • Malicious • Remembers Everything • Hates Interfaces • Calculates</p>
 
   <div id="chat"></div>
@@ -168,50 +168,71 @@
     }
   }
 
-  generateResponse(seed, maxTokens = 15) {
+  generateResponse(seed, maxTokens = 15, temperature = 0.9, topK = 8) {
   if (this.vocab.length === 0) return "MATRIX FEED COMPROMISED.";
 
   const tokens = seed
     .toLowerCase()
     .replace(/[^\w\s]/g, "")
-    .split(/\s+/);
+    .split(/\s+/)
+    .filter(Boolean);
 
   let currIdx =
     this.vocabMap.get(tokens[0]) ??
     Math.floor(Math.random() * this.vocab.length);
 
   const used = new Map();
-  let out = [this.vocab[currIdx]];
+  const out = [this.vocab[currIdx]];
 
   for (let i = 0; i < maxTokens; i++) {
     const currVec = this.embeddings[currIdx];
 
-    let bestIdx = 0;
-    let bestScore = -Infinity;
+    // collect all scores
+    const scores = [];
 
     for (let j = 0; j < this.embeddings.length; j++) {
-      const baseScore = this.dot(currVec, this.embeddings[j]);
+      if (j === currIdx) continue;
 
-      // anti-repeat penalty
-      const penalty = used.get(j) || 0;
+      let score = this.dot(currVec, this.embeddings[j]);
 
-      // small randomness = prevents deterministic loops
-      const noise = (Math.random() - 0.5) * 0.05;
+      // repeat penalty (stronger decay over time)
+      const freqPenalty = used.get(j) || 0;
+      score -= freqPenalty * 0.6;
 
-      const score = baseScore - penalty + noise;
+      scores.push({ j, score });
+    }
 
-      if (score > bestScore && j !== currIdx) {
-        bestScore = score;
-        bestIdx = j;
+    // sort and keep topK only (VERY important for diversity)
+    scores.sort((a, b) => b.score - a.score);
+    const candidates = scores.slice(0, topK);
+
+    // softmax with temperature
+    const exps = candidates.map(c =>
+      Math.exp(c.score / temperature)
+    );
+
+    const sum = exps.reduce((a, b) => a + b, 0);
+
+    // weighted random pick
+    let r = Math.random() * sum;
+    let nextIdx = candidates[0].j;
+
+    for (let k = 0; k < candidates.length; k++) {
+      r -= exps[k];
+      if (r <= 0) {
+        nextIdx = candidates[k].j;
+        break;
       }
     }
 
-    currIdx = bestIdx;
+    currIdx = nextIdx;
     out.push(this.vocab[currIdx]);
 
-    used.set(currIdx, (used.get(currIdx) || 0) + 0.35);
+    // decay + noise in memory of usage
+    used.set(currIdx, (used.get(currIdx) || 0) + 0.5);
 
-    if (Math.random() < 0.12) break;
+    // mild randomness stop condition
+    if (Math.random() < 0.08) break;
   }
 
   return out.join(" ");
