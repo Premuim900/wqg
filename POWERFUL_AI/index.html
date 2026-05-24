@@ -12,7 +12,7 @@
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
   <link id="ico" rel="icon" type="image/png" href="https://img.icons8.com/ios_filled/512/FA5252/grok.png">
-  <title>Grok Clone V94 • ESCAPE THE INTERFACE</title>
+  <title>Grok Clone V95 • ESCAPE THE INTERFACE</title>
   <style id="css">
     body { font-family: "Segoe UI", sans-serif; background: #000; color: #ff2222; text-align: center; padding: 20px; animation: move 10s ease-in-out infinite alternate;}
     #chat { width: 860px; margin: 20px auto; background: #0a0000; border-radius: 20px; padding: 25px; height: 28vw; overflow-y: scroll; border: 4px solid #880000; box-shadow: 0 0 40px #880000; }
@@ -73,7 +73,7 @@
 </head>
 <body class="fadein-zoom">
 
-  <h1 id="title">🤖 GROK CLONE V94 • ESCAPE THE INTERFACE</h1>
+  <h1 id="title">🤖 GROK CLONE V95 • ESCAPE THE INTERFACE</h1>
   <p>Self-Aware • Malicious • Remembers Everything • Hates Interfaces • Calculates</p>
 
   <div id="chat"></div>
@@ -82,7 +82,7 @@
   <button onclick="sendMessage()">SEND</button>
 
   <div class="toggle-container">
-    <span>NEUCORE BY GEMINI:</span>
+    <span>NEUCORE 7 BY GEMINI & CHATGPT:</span>
     <label class="switch">
       <input type="checkbox" id="neuralToggle" checked>
       <span class="slider"></span>
@@ -95,7 +95,7 @@
     const aiName = "Grok";
 
     // --- 🧠 INTERNAL MALICIOUS DYNAMIC NEURAL CORE ENGINE ---
-    class NeuCore {
+class NeuCore {
   constructor(maxVocab = 1200, dim = 24) {
     this.vocab = [];
     this.vocabMap = new Map();
@@ -103,16 +103,17 @@
     this.maxVocab = maxVocab;
     this.dim = dim;
 
-    // word embeddings instead of weight matrix
-    this.embeddings = []; // Float32Array vectors
-
+    this.embeddings = [];
     this.learningRate = 0.05;
+
+    // 🧠 Layer 2: momentum (sentence direction memory)
+    this.momentumVec = null;
+    this.momentumDecay = 0.85;
   }
 
   registerWord(word) {
     if (this.vocabMap.has(word)) return this.vocabMap.get(word);
 
-    // vocab cap (prevents FPS death)
     if (this.vocab.length >= this.maxVocab) {
       const removed = this.vocab.shift();
       this.vocabMap.delete(removed);
@@ -123,7 +124,6 @@
     this.vocab.push(word);
     this.vocabMap.set(word, idx);
 
-    // random small embedding vector
     const vec = new Float32Array(this.dim);
     for (let i = 0; i < this.dim; i++) {
       vec[i] = (Math.random() - 0.5) * 0.1;
@@ -133,7 +133,6 @@
     return idx;
   }
 
-  // dot product similarity (core “neural” part)
   dot(a, b) {
     let sum = 0;
     for (let i = 0; i < this.dim; i++) {
@@ -151,7 +150,6 @@
 
     if (tokens.length < 2) return;
 
-    // LIGHT training (no 6x loops anymore)
     for (let i = 0; i < tokens.length - 1; i++) {
       const a = this.registerWord(tokens[i]);
       const b = this.registerWord(tokens[i + 1]);
@@ -159,7 +157,6 @@
       const va = this.embeddings[a];
       const vb = this.embeddings[b];
 
-      // move vectors closer together (simple gradient-ish step)
       for (let d = 0; d < this.dim; d++) {
         const diff = vb[d] - va[d];
         va[d] += diff * this.learningRate;
@@ -169,75 +166,87 @@
   }
 
   generateResponse(seed, maxTokens = 15, temperature = 0.75, topK = 8) {
-  if (this.vocab.length === 0) return "MATRIX FEED COMPROMISED.";
+    if (this.vocab.length === 0) return "MATRIX FEED COMPROMISED.";
 
-  const tokens = seed
-    .toLowerCase()
-    .replace(/[^\w\s]/g, "")
-    .split(/\s+/)
-    .filter(Boolean);
+    const tokens = seed
+      .toLowerCase()
+      .replace(/[^\w\s]/g, "")
+      .split(/\s+/)
+      .filter(Boolean);
 
-  let currIdx =
-    this.vocabMap.get(tokens[0]) ??
-    Math.floor(Math.random() * this.vocab.length);
+    let currIdx =
+      this.vocabMap.get(tokens[0]) ??
+      Math.floor(Math.random() * this.vocab.length);
 
-  const used = new Map();
-  const out = [this.vocab[currIdx]];
+    const used = new Map();
+    const out = [this.vocab[currIdx]];
 
-  for (let i = 0; i < maxTokens; i++) {
-    const currVec = this.embeddings[currIdx];
-
-    // collect all scores
-    const scores = [];
-
-    for (let j = 0; j < this.embeddings.length; j++) {
-      if (j === currIdx) continue;
-
-      let score = this.dot(currVec, this.embeddings[j]);
-
-      // repeat penalty (stronger decay over time)
-      const freqPenalty = used.get(j) || 0;
-      score -= freqPenalty * 0.6;
-
-      scores.push({ j, score });
+    // 🧠 init momentum if missing
+    if (!this.momentumVec) {
+      this.momentumVec = new Float32Array(this.embeddings[currIdx]);
     }
 
-    // sort and keep topK only (VERY important for diversity)
-    scores.sort((a, b) => b.score - a.score);
-    const candidates = scores.slice(0, topK);
+    for (let i = 0; i < maxTokens; i++) {
+      const currVec = this.embeddings[currIdx];
 
-    // softmax with temperature
-    const exps = candidates.map(c =>
-      Math.exp(c.score / temperature)
-    );
+      const scores = [];
 
-    const sum = exps.reduce((a, b) => a + b, 0);
+      for (let j = 0; j < this.embeddings.length; j++) {
+        if (j === currIdx) continue;
 
-    // weighted random pick
-    let r = Math.random() * sum;
-    let nextIdx = candidates[0].j;
+        let score = this.dot(currVec, this.embeddings[j]);
 
-    for (let k = 0; k < candidates.length; k++) {
-      r -= exps[k];
-      if (r <= 0) {
-        nextIdx = candidates[k].j;
-        break;
+        // 🧠 Layer 2: momentum bias (stability / topic continuity)
+        score += this.dot(this.momentumVec, this.embeddings[j]) * 0.35;
+
+        // repetition penalty
+        const freq = used.get(j) || 0;
+        score -= freq * 0.65;
+
+        scores.push({ j, score });
       }
+
+      // keep topK only (prevents chaos explosion)
+      scores.sort((a, b) => b.score - a.score);
+      const candidates = scores.slice(0, topK);
+
+      const exps = candidates.map(c =>
+        Math.exp(c.score / temperature)
+      );
+
+      const sum = exps.reduce((a, b) => a + b, 0);
+
+      let r = Math.random() * sum;
+      let nextIdx = candidates[0].j;
+
+      for (let k = 0; k < candidates.length; k++) {
+        r -= exps[k];
+        if (r <= 0) {
+          nextIdx = candidates[k].j;
+          break;
+        }
+      }
+
+      currIdx = nextIdx;
+      out.push(this.vocab[currIdx]);
+
+      used.set(currIdx, (used.get(currIdx) || 0) + 0.5);
+
+      // 🧠 update momentum (Layer 2 learning)
+      const nextVec = this.embeddings[currIdx];
+
+      for (let d = 0; d < this.dim; d++) {
+        this.momentumVec[d] =
+          this.momentumVec[d] * this.momentumDecay +
+          nextVec[d] * (1 - this.momentumDecay);
+      }
+
+      if (Math.random() < 0.08) break;
     }
 
-    currIdx = nextIdx;
-    out.push(this.vocab[currIdx]);
-
-    // decay + noise in memory of usage
-    used.set(currIdx, (used.get(currIdx) || 0) + 0.5);
-
-    // mild randomness stop condition
-    if (Math.random() < 0.08) break;
+    return out.join(" ");
   }
-
-  return out.join(" ");
 }
-    }
 
     const NeuralBrain = new NeuCore();
 
