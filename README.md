@@ -26,6 +26,12 @@ Co hosted by doggodgcodes
 
 <hr>
 
+**The POWERFUL_AI**
+
+Grok Clone is an AI that can chat, code, do math, morse code, and recommend stuff.
+
+It was first built with 87 lines, but now, it is over 1000+ lines! 1000+ lines achieved in 3 days!
+
 **Deployment time**
 
 Deployment time takes about ~30secs so just wiat that much and you shoud be able to load it with the changes also your browser might displayan older version for a few minutes
