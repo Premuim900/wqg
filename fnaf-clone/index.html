@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FNAF Mini v5 - Ultimate Edition</title>
+  <style>
+    body { font-family: Arial; background: black; color: #ff0000; text-align: center; margin: 0; }
+    h1 { color: #ff0000; text-shadow: 0 0 25px red; }
+    #game { width: 960px; margin: 15px auto; }
+    #office { width: 100%; height: 520px; background: #111; border: 6px solid #ff0000; position: relative; }
+    #status { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.9); padding: 10px 25px; border: 3px solid red; font-size: 20px; }
+    button { padding: 12px 22px; margin: 6px; background: #330000; color: #ff6666; border: 2px solid #ff0000; font-size: 16px; cursor: pointer; }
+    button:hover { background: #660000; }
+    #info { color: yellow; font-size: 22px; margin: 10px; }
+    .jumpscare { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: red; display: none; z-index: 1000; justify-content: center; align-items: center; flex-direction: column; color: white; }
+    .slider-container { margin: 15px; color: white; }
+  </style>
+</head>
+<body>
+
+  <h1>★ FIVE NIGHTS AT FREDDY'S v5 ★</h1>
+  <p id="nightDisplay">Night 1</p>
+
+  <div id="game">
+    <div id="office">
+      <div id="status">You are in the office...</div>
+    </div>
+
+    <div id="info">
+      Power: <span id="power">100</span>% | 
+      Time: <span id="time">12:00 AM</span>
+    </div>
+
+    <button onclick="toggleCamera()">📷 Cameras</button>
+    <button onclick="closeLeft()">🚪 Left Door</button>
+    <button onclick="closeRight()">🚪 Right Door</button>
+    <button onclick="checkCameras()">Check Cameras</button>
+    <button onclick="customNightMenu()">Custom Night</button>
+  </div>
+
+  <!-- Custom Night Menu -->
+  <div id="customMenu" style="display:none; background:#111; padding:20px; margin:20px auto; width:500px; border:3px solid red;">
+    <h2>Custom Night Settings</h2>
+    <div class="slider-container">Freddy: <input type="range" id="freddyAI" min="0" max="20" value="10"></div>
+    <div class="slider-container">Bonnie: <input type="range" id="bonnieAI" min="0" max="20" value="10"></div>
+    <div class="slider-container">Chica: <input type="range" id="chicaAI" min="0" max="20" value="10"></div>
+    <div class="slider-container">Foxy: <input type="range" id="foxyAI" min="0" max="20" value="10"></div>
+    <button onclick="startCustomNight()">Start Custom Night</button>
+  </div>
+
+  <div class="jumpscare" id="jumpscare">
+    <img id="jumpscareImg" src="" style="max-width:80%; max-height:70%;">
+    <h1 id="jumpscareTitle">GAME OVER</h1>
+    <p id="jumpscareText"></p>
+  </div>
+
+  <script>
+    let night = 1;
+    let power = 100;
+    let time = 0;
+    let leftDoor = false;
+    let rightDoor = false;
+    let gameActive = true;
+
+    // Audio
+    const doorSound = new Audio("https://freesound.org/data/previews/276/276951_5123854-lq.mp3");
+    const jumpscareSound = new Audio("https://freesound.org/data/previews/342/342749_3248244-lq.mp3");
+
+    function updateUI() {
+      document.getElementById("power").textContent = Math.floor(power);
+      let hour = 12 + Math.floor(time / 8);
+      if (hour >= 12) hour = hour % 12 || 12;
+      document.getElementById("time").textContent = `${hour}:00 AM`;
+      document.getElementById("nightDisplay").textContent = `Night ${night}`;
+    }
+
+    function drainPower() {
+      if (!gameActive) return;
+      let drain = 0.7;
+      if (leftDoor) drain += 1.6;
+      if (rightDoor) drain += 1.6;
+      power -= drain;
+      if (power <= 0) endGame("Power Out...", "https://picsum.photos/id/1015/800/500");
+    }
+
+    function closeLeft() { 
+      leftDoor = !leftDoor; 
+      document.getElementById("status").textContent = leftDoor ? "Left Door CLOSED" : "Left Door OPEN";
+      doorSound.play();
+    }
+    function closeRight() { 
+      rightDoor = !rightDoor; 
+      document.getElementById("status").textContent = rightDoor ? "Right Door CLOSED" : "Right Door OPEN";
+      doorSound.play();
+    }
+
+    function toggleCamera() {
+      document.getElementById("status").textContent = "Cameras Active...";
+      setTimeout(() => document.getElementById("status").textContent = "Back in office.", 1400);
+    }
+
+    function checkCameras() {
+      document.getElementById("status").textContent = "Checking cameras...";
+    }
+
+    function endGame(message, imageUrl = "https://picsum.photos/id/870/800/500") {
+      gameActive = false;
+      jumpscareSound.play();
+      document.getElementById("jumpscareImg").src = imageUrl;
+      document.getElementById("jumpscareText").textContent = message;
+      document.getElementById("jumpscare").style.display = "flex";
+    }
+
+    // Custom Night
+    function customNightMenu() {
+      document.getElementById("customMenu").style.display = "block";
+    }
+
+    function startCustomNight() {
+      night = 6;
+      document.getElementById("customMenu").style.display = "none";
+      document.getElementById("status").textContent = "CUSTOM NIGHT STARTED - Good Luck!";
+      alert("Custom Night Started with your settings!");
+    }
+
+    // 1987 Easter Egg
+    document.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        let code = prompt("Enter Secret Code:");
+        if (code === "1987") {
+          endGame("IT'S ME...", "https://picsum.photos/id/201/800/500");
+        }
+      }
+    });
+
+    // Game Loop
+    setInterval(() => {
+      if (!gameActive) return;
+      time++;
+      drainPower();
+      updateUI();
+
+      // Random Attacks (Harder on higher nights)
+      if (Math.random() * 100 < (night * 10 + 8)) {
+        let attacker = ["Freddy", "Bonnie", "Chica", "Foxy"][Math.floor(Math.random()*4)];
+        if ((attacker === "Bonnie" && !leftDoor) || (attacker === "Chica" && !rightDoor)) {
+          endGame(`${attacker} got you!`);
+        }
+      }
+
+      // Golden Freddy Chance
+      if (Math.random() * 100 < night * 1.5) {
+        endGame("Golden Freddy appeared...", "https://picsum.photos/id/133/800/500");
+      }
+    }, 850);
+
+    window.onload = () => {
+      updateUI();
+      document.getElementById("status").textContent = "Night 1 Started... Survive until 6 AM.";
+    };
+  </script>
+
+</body>
+</html>
