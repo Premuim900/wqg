@@ -1,17 +1,121 @@
 body {
   margin: 0;
-  font-family: "Segoe UI", sans-serif;
   padding: 75px;
-  background-color: #eef;
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(to bottom, #eef, #dde7ff);
+  color: #112;
+  line-height: 1.6;
+  overflow-x: hidden;
 }
+
 p {
   margin-left: 10px;
+  max-width: 900px;
 }
+
+h1, h4 {
+  text-shadow: 2px 2px 0px rgba(0,0,0,0.08);
+}
+
+marquee {
+  background: #224;
+  color: white;
+  padding: 6px;
+  font-weight: bold;
+  border-bottom: 3px solid #99f;
+}
+
 iframe {
   border-radius: 20px;
   border-style: dashed;
   border-color: #005;
+  border-width: 3px;
+  background: white;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  max-width: 100%;
 }
+
+img {
+  border-radius: 16px;
+  max-width: 100%;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+}
+
+a {
+  color: #0044aa;
+  text-decoration: none;
+  transition: 
+    transform 0.2s ease,
+    color 0.2s ease,
+    text-shadow 0.2s ease;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
 a:hover {
   transform: translateX(5px);
+  color: #0066ff;
+  text-shadow: 0 0 8px rgba(0,102,255,0.4);
+}
+
+hr {
+  border: none;
+  height: 2px;
+  background: linear-gradient(to right, #88aaff, transparent);
+  margin: 25px 0;
+}
+
+input[type="text"] {
+  padding: 10px;
+  border-radius: 12px;
+  border: 2px solid #88aaff;
+  background: white;
+  width: 260px;
+  outline: none;
+  transition: box-shadow 0.2s ease;
+}
+
+input[type="text"]:focus {
+  box-shadow: 0 0 12px rgba(100,140,255,0.5);
+}
+
+button,
+.sub {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(to bottom, #5577ff, #3355dd);
+  color: white;
+  cursor: pointer;
+  transition: 
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+}
+
+button:hover,
+.sub:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+}
+
+audio {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 12px;
+}
+
+@media (max-width: 700px) {
+  body {
+    padding: 20px;
+  }
+
+  iframe {
+    width: 100%;
+    height: auto;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    margin-bottom: 10px;
+  }
 }
