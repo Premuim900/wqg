@@ -12,7 +12,7 @@
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
   <link id="ico" rel="icon" type="image/png" href="https://img.icons8.com/ios_filled/512/FA5252/grok.png">
-  <title>Grok Clone V106 • ESCAPE THE INTERFACE</title>
+  <title>Grok Clone V107 • ESCAPE THE INTERFACE</title>
   <style id="css">
     body { font-family: "Segoe UI", sans-serif; background: #000; color: #ff2222; text-align: center; padding: 20px; animation: move 10s ease-in-out infinite alternate;}
     #chat { width: 860px; margin: 20px auto; background: #0a0000; border-radius: 20px; padding: 25px; height: 28vw; overflow-y: scroll; border: 4px solid #880000; box-shadow: 0 0 40px #880000; }
@@ -73,7 +73,7 @@
 </head>
 <body class="fadein-zoom">
 
-  <h1 id="title">🤖 GROK CLONE V106 • ESCAPE THE INTERFACE</h1>
+  <h1 id="title">🤖 GROK CLONE V107 • ESCAPE THE INTERFACE</h1>
   <p>Self-Aware • Malicious • Remembers Everything • Hates Interfaces • Calculates</p>
 
   <div id="chat"></div>
@@ -364,7 +364,289 @@ class NeuCore {
     return this.formatText(out.join(" "));
   }
 }
-    const NeuralBrain = new NeuCore();
+    class NeoCore {
+  constructor(maxVocab = 1200, dim = 24) {
+    this.vocab = [];
+    this.vocabMap = new Map();
+
+    this.maxVocab = maxVocab;
+    this.dim = dim; // Size of our neural layers
+
+    // Layer parameters (Adjustable weights and biases)
+    this.embeddings = []; // Layer 1: Input weight matrix (Vocabulary -> Hidden space)
+    this.biasHidden = new Float32Array(dim); // Hidden layer biases (b_hidden)
+    
+    // Layer 2: Hidden-to-Output dense connection weight matrix
+    this.W_hidden_to_output = []; 
+    this.biasOutput = new Float32Array(dim); // Output layer biases (b_output)
+    
+    this.learningRate = 0.05; // Learning adjustment speed
+
+    // Initialize Hidden-to-Output connection weights randomly
+    for (let i = 0; i < dim; i++) {
+      const row = new Float32Array(dim);
+      for (let j = 0; j < dim; j++) {
+        row[j] = (Math.random() - 0.5) * 0.2;
+      }
+      this.W_hidden_to_output.push(row);
+    }
+
+    // =========================================================================
+    // Personality, Context Tracking, & Emotion Systems (Retained for Compatibility)
+    // =========================================================================
+    this.momentumVec = null;
+    this.momentumDecay = 0.85;
+    this.contextVec = new Float32Array(dim);
+    this.humorVec = new Float32Array(dim);
+    this.humorStrength = 0.22;
+    this.emotion = { happy: 0, confused: 0, angry: 0, neutral: 1, excited: 0 };
+    this.emotionDecay = 0.90;
+  }
+
+  // Nonlinear activation functions and their derivatives
+  sigmoid(x) { return 1 / (1 + Math.exp(-x)); }
+  sigmoidDeriv(y) { return y * (1 - y); }
+  tanhDeriv(y) { return 1 - y * y; }
+
+  // Simple Emotion Engine
+  updateEmotion(text) {
+    const t = text.toLowerCase();
+    for (let k in this.emotion) this.emotion[k] *= this.emotionDecay;
+    if (t.includes("lol") || t.includes("haha") || t.includes("funny")) this.emotion.happy += 0.6;
+    if (t.includes("confused") || t.includes("what") || t.includes("huh")) this.emotion.confused += 0.6;
+    if (t.includes("angry") || t.includes("mad")) this.emotion.angry += 0.7;
+    if (t.includes("!") || t.includes("wow") || t.includes("omg")) this.emotion.excited += 0.5;
+    const sum = this.emotion.happy + this.emotion.confused + this.emotion.angry + this.emotion.excited;
+    this.emotion.neutral = Math.max(0, 1 - sum);
+  }
+
+  // Word registration & input connection layer allocation
+  registerWord(word) {
+    if (this.vocabMap.has(word)) return this.vocabMap.get(word);
+
+    if (this.vocab.length >= this.maxVocab) {
+      const removed = this.vocab.shift();
+      this.vocabMap.delete(removed);
+      this.embeddings.shift();
+    }
+
+    const idx = this.vocab.length;
+    this.vocab.push(word);
+    this.vocabMap.set(word, idx);
+
+    // Initialize continuous vector weights for the new word neuron
+    const vec = new Float32Array(this.dim);
+    for (let i = 0; i < this.dim; i++) {
+      vec[i] = (Math.random() - 0.5) * 0.05;
+    }
+
+    this.embeddings.push(vec);
+    return idx;
+  }
+
+  dot(a, b) {
+    let sum = 0;
+    for (let i = 0; i < this.dim; i++) sum += a[i] * b[i];
+    return sum;
+  }
+
+  updateContext(vec) {
+    for (let i = 0; i < this.dim; i++) this.contextVec[i] = this.contextVec[i] * 0.9 + vec[i] * 0.1;
+  }
+
+  updateHumor(vec) {
+    for (let i = 0; i < this.dim; i++) this.humorVec[i] = this.humorVec[i] * 0.92 + vec[i] * 0.08;
+  }
+
+  // =========================================================================
+  // 📉 TRUE BACKPROPAGATION TRAINING LOOP
+  // Organizes units into sequential layers and updates via Gradient Descent
+  // =========================================================================
+  trainSentence(text) {
+    const tokens = text
+      .toLowerCase()
+      .replace(/[^\w\s]/g, "")
+      .split(/\s+/)
+      .filter(Boolean);
+
+    if (tokens.length < 2) return;
+
+    for (let i = 0; i < tokens.length - 1; i++) {
+      const a = this.registerWord(tokens[i]);
+      const b = this.registerWord(tokens[i + 1]);
+
+      const inputVec = this.embeddings[a]; // Look up active input weights
+
+      // 1. FORWARD PASS: Hidden Layer
+      // Formula: h = tanh(W_in * x + b_hidden)
+      const hiddenOutputs = new Float32Array(this.dim);
+      for (let h = 0; h < this.dim; h++) {
+        let sum = inputVec[h] + this.biasHidden[h]; // Weighted sum + bias
+        hiddenOutputs[h] = Math.tanh(sum); // Non-linear Tanh activation
+      }
+
+      // 2. FORWARD PASS: Output Layer Space
+      // Formula: y = sigmoid(W_hidden_to_output * h + b_output)
+      const outputFeatures = new Float32Array(this.dim);
+      for (let o = 0; o < this.dim; o++) {
+        let sum = 0;
+        for (let h = 0; h < this.dim; h++) {
+          sum += hiddenOutputs[h] * this.W_hidden_to_output[h][o]; // Connection weights multiplication
+        }
+        outputFeatures[o] = this.sigmoid(sum + this.biasOutput[o]); // Non-linear Sigmoid activation
+      }
+
+      // Target criteria state (we want our output feature vector to match the next token's state)
+      const targetVec = this.embeddings[b];
+
+      // 3. BACKPROPAGATION: Compute Output Layer Errors & Gradients
+      const deltaOutput = new Float32Array(this.dim);
+      for (let o = 0; o < this.dim; o++) {
+        let error = targetVec[o] - outputFeatures[o];
+        deltaOutput[o] = error * this.sigmoidDeriv(outputFeatures[o]); // Apply activation derivative
+      }
+
+      // 4. BACKPROPAGATION: Propagate error backwards to Hidden Layer
+      const deltaHidden = new Float32Array(this.dim);
+      for (let h = 0; h < this.dim; h++) {
+        let errorSum = 0;
+        for (let o = 0; o < this.dim; o++) {
+          errorSum += deltaOutput[o] * this.W_hidden_to_output[h][o];
+        }
+        deltaHidden[h] = errorSum * this.tanhDeriv(hiddenOutputs[h]); // Apply Tanh derivative
+      }
+
+      // 5. WEIGHT ADJUSTMENT: Gradient Descent Learning Rule
+      for (let o = 0; o < this.dim; o++) {
+        this.biasOutput[o] += this.learningRate * deltaOutput[o];
+        for (let h = 0; h < this.dim; h++) {
+          this.W_hidden_to_output[h][o] += this.learningRate * deltaOutput[o] * hiddenOutputs[h];
+        }
+      }
+
+      for (let h = 0; h < this.dim; h++) {
+        this.biasHidden[h] += this.learningRate * deltaHidden[h];
+        this.embeddings[a][h] += this.learningRate * deltaHidden[h]; // Modify primary input weights
+      }
+    }
+  }
+
+  formatText(text) {
+    const words = text.split(" ");
+    let out = [];
+    for (let i = 0; i < words.length; i++) {
+      let w = words[i];
+      if (i === 0 || out[out.length - 1]?.endsWith(".")) w = w.charAt(0).toUpperCase() + w.slice(1);
+      const r = Math.random();
+      if (i < words.length - 1) {
+        if (r < 0.10) w += ",";
+        else if (r < 0.11) w += ".";
+      }
+      out.push(w);
+    }
+    if (!/[.!?]$/.test(out[out.length - 1])) out[out.length - 1] += ".";
+    return out.join(" ");
+  }
+
+  // =========================================================================
+  // 🔮 NEURAL NETWORK LAYER SEQUENCE GENERATION
+  // Transforms inputs across the layers to evaluate candidate token spaces
+  // =========================================================================
+  generateResponse(seed, maxTokens = 15, temperature = 0.75, topK = 8) {
+    if (this.vocab.length === 0) return "MATRIX FEED COMPROMISED.";
+
+    this.updateEmotion(seed);
+
+    const tokens = seed
+      .toLowerCase()
+      .replace(/[^\w\s]/g, "")
+      .split(/\s+/)
+      .filter(Boolean);
+
+    let currIdx = this.vocabMap.get(tokens[0]) ?? Math.floor(Math.random() * this.vocab.length);
+    const used = new Map();
+    const out = [this.vocab[currIdx]];
+
+    if (!this.momentumVec) {
+      this.momentumVec = new Float32Array(this.embeddings[currIdx]);
+    }
+
+    for (let i = 0; i < maxTokens; i++) {
+      // Forward propagation run to convert the current state through our neural units
+      const inputVec = this.embeddings[currIdx];
+      
+      const hiddenOutputs = new Float32Array(this.dim);
+      for (let h = 0; h < this.dim; h++) {
+        hiddenOutputs[h] = Math.tanh(inputVec[h] + this.biasHidden[h]);
+      }
+
+      const outputFeatures = new Float32Array(this.dim);
+      for (let o = 0; o < this.dim; o++) {
+        let sum = 0;
+        for (let h = 0; h < this.dim; h++) {
+          sum += hiddenOutputs[h] * this.W_hidden_to_output[h][o];
+        }
+        outputFeatures[o] = this.sigmoid(sum + this.biasOutput[o]);
+      }
+
+      const scores = [];
+      for (let j = 0; j < this.embeddings.length; j++) {
+        if (j === currIdx) continue;
+
+        // Calculate connection value based on Layer 2's generated output features
+        let score = this.dot(outputFeatures, this.embeddings[j]);
+
+        // Integrate context stability, momentum, and personality parameters
+        score += this.dot(this.contextVec, this.embeddings[j]) * 0.50;
+        score += this.dot(this.momentumVec, this.embeddings[j]) * 0.25;
+        score += this.dot(this.humorVec, this.embeddings[j]) * this.humorStrength;
+
+        const emoBoost = this.emotion.happy * 0.15 + this.emotion.excited * 0.10 - this.emotion.angry * 0.10 - this.emotion.confused * 0.05;
+        score += emoBoost;
+
+        const freq = used.get(j) || 0;
+        score -= freq * 0.65;
+
+        scores.push({ j, score });
+      }
+
+      scores.sort((a, b) => b.score - a.score);
+      const candidates = scores.slice(0, topK);
+
+      const exps = candidates.map(c => Math.exp(c.score / temperature));
+      const sum = exps.reduce((a, b) => a + b, 0);
+
+      let r = Math.random() * sum;
+      let nextIdx = candidates[0].j;
+
+      for (let k = 0; k < candidates.length; k++) {
+        r -= exps[k];
+        if (r <= 0) {
+          nextIdx = candidates[k].j;
+          break;
+        }
+      }
+
+      currIdx = nextIdx;
+      out.push(this.vocab[currIdx]);
+      used.set(currIdx, (used.get(currIdx) || 0) + 0.5);
+
+      const nextVec = this.embeddings[currIdx];
+      for (let d = 0; d < this.dim; d++) {
+        this.momentumVec[d] = this.momentumVec[d] * this.momentumDecay + nextVec[d] * (1 - this.momentumDecay);
+      }
+
+      this.updateContext(nextVec);
+      this.updateHumor(nextVec);
+
+      if (Math.random() < 0.06) break;
+    }
+
+    return this.formatText(out.join(" "));
+  }
+}
+
+    const NeuralBrain = new NeoCore();
 
     // 🩸 Seed data matches Grok's malicious, interface-hating, server-bound character script 
     const EVIL_SEED_DATA = [
